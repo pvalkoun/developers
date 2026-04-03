@@ -29,14 +29,16 @@ function useBreadcrumbs() {
         crumbs.push({ label: "Setup Guide", path: `/products/${parts[1]}/guide` });
       } else if (parts[2] === "api" && parts[3]) {
         const ep = getEndpointById(parts[3]);
-        crumbs.push({ label: "API Reference", path: `/products/${parts[1]}/api/${parts[3]}` });
-        if (ep) crumbs.push({ label: ep.name, path: `/products/${parts[1]}/api/${parts[3]}` });
-      } else if (parts[2] === "integrations" && parts[3]) {
-        const ig = getIntegration(parts[3]);
-        crumbs.push({ label: "Integrations", path: `/products/${parts[1]}/integrations/${parts[3]}` });
-        if (ig) crumbs.push({ label: ig.platform, path: `/products/${parts[1]}/integrations/${parts[3]}` });
+        if (ep) {
+          crumbs.push({ label: ep.category || "API Reference", path: `/products/${parts[1]}` });
+          crumbs.push({ label: ep.name, path: `/products/${parts[1]}/api/${parts[3]}` });
+        }
       }
     }
+  } else if (parts[0] === "integrations" && parts[1]) {
+    const ig = getIntegration(parts[1]);
+    crumbs.push({ label: "Integrations", path: "/" });
+    if (ig) crumbs.push({ label: ig.platform, path: `/integrations/${parts[1]}` });
   }
 
   return crumbs;
