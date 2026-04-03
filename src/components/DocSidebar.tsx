@@ -214,43 +214,13 @@ export function DocSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        <SidebarGroup>
-          <SidebarGroupLabel>API Reference</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {categories.map(cat => {
-                const catEndpoints = endpoints.filter(ep => ep.category === cat);
-                const isActive = catEndpoints.some(ep => location.pathname.includes(ep.id));
-                return (
-                  <CollapsibleCategory
-                    key={cat}
-                    label={cat}
-                    defaultOpen={isActive}
-                    collapsed={collapsed}
-                  >
-                    {catEndpoints.map(ep => (
-                      <SidebarMenuItem key={ep.id}>
-                        <SidebarMenuButton asChild>
-                          <NavLink
-                            to={`/products/${productId}/api/${ep.id}`}
-                            activeClassName="bg-sidebar-accent text-sidebar-primary font-medium"
-                            className="flex items-center gap-2 pl-6"
-                          >
-                            {!collapsed && (
-                              <>
-                                <MethodBadge method={ep.method} />
-                                <span className="text-xs truncate">{ep.name}</span>
-                              </>
-                            )}
-                            {collapsed && <Code2 className="h-4 w-4" />}
-                          </NavLink>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    ))}
-                  </CollapsibleCategory>
-                );
-              })}
-            </SidebarMenu>
+        <ApiCategoryAccordion
+          categories={categories}
+          endpoints={endpoints}
+          productId={productId!}
+          collapsed={collapsed}
+          currentPath={location.pathname}
+        />
           </SidebarGroupContent>
         </SidebarGroup>
 
