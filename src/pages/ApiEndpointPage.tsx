@@ -1,11 +1,56 @@
 import { useParams } from "react-router-dom";
 import { getEndpointById } from "@/data/apiData";
+import { endpointFieldDocs } from "@/data/apiFieldDocs";
 import { CodeBlock } from "@/components/CodeBlock";
 import { MethodBadge } from "@/components/MethodBadge";
+import type { FieldDoc } from "@/data/apiFieldDocs";
+
+function FieldTable({ title, fields }: { title: string; fields: FieldDoc[] }) {
+  return (
+    <>
+      <h2>{title}</h2>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm border-collapse">
+          <thead>
+            <tr className="border-b">
+              <th className="text-left py-2 px-3 font-semibold">Field</th>
+              <th className="text-left py-2 px-3 font-semibold">Type</th>
+              <th className="text-left py-2 px-3 font-semibold">Required</th>
+              <th className="text-left py-2 px-3 font-semibold">Description</th>
+              <th className="text-left py-2 px-3 font-semibold">Constraints</th>
+            </tr>
+          </thead>
+          <tbody>
+            {fields.map((f, i) => (
+              <tr key={i} className="border-b last:border-b-0">
+                <td className="py-2 px-3 font-mono text-xs">{f.path}</td>
+                <td className="py-2 px-3">
+                  <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-muted text-muted-foreground">
+                    {f.type}
+                  </span>
+                </td>
+                <td className="py-2 px-3">
+                  {f.required ? (
+                    <span className="text-xs font-semibold text-destructive">Required</span>
+                  ) : (
+                    <span className="text-xs text-muted-foreground">Optional</span>
+                  )}
+                </td>
+                <td className="py-2 px-3 text-muted-foreground">{f.description}</td>
+                <td className="py-2 px-3 text-xs text-muted-foreground">{f.constraints || "—"}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
+}
 
 export default function ApiEndpointPage() {
   const { endpointId } = useParams<{ endpointId: string }>();
   const endpoint = getEndpointById(endpointId || "");
+  const fieldDocs = endpointFieldDocs[endpointId || ""];
 
   if (!endpoint) return <div className="docs-prose"><h1>Endpoint not found</h1></div>;
 
@@ -22,6 +67,10 @@ export default function ApiEndpointPage() {
       </div>
 
       <p>{endpoint.description}</p>
+
+      {fieldDocs?.pathParams && fieldDocs.pathParams.length > 0 && (
+        <FieldTable title="Path Parameters" fields={fieldDocs.pathParams} />
+      )}
 
       {endpoint.headers && endpoint.headers.length > 0 && (
         <>
@@ -49,16 +98,24 @@ export default function ApiEndpointPage() {
         </>
       )}
 
+      {fieldDocs?.requestFields && fieldDocs.requestFields.length > 0 && (
+        <FieldTable title="Request Fields" fields={fieldDocs.requestFields} />
+      )}
+
       {endpoint.requestBody && (
         <>
-          <h2>Request Body</h2>
+          <h2>Request Body Example</h2>
           <CodeBlock code={endpoint.requestBody} title="JSON" language="json" />
         </>
       )}
 
+      {fieldDocs?.responseFields && fieldDocs.responseFields.length > 0 && (
+        <FieldTable title="Response Fields" fields={fieldDocs.responseFields} />
+      )}
+
       {endpoint.responseBody && (
         <>
-          <h2>Response</h2>
+          <h2>Response Example</h2>
           <div className="flex items-center gap-2 mb-2">
             <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-800">
               {endpoint.responseStatus}

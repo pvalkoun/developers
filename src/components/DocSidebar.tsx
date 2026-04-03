@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { downloadOpenApiSpec } from "@/lib/openApiExport";
 import { useLocation, useNavigate } from "react-router-dom";
 import { NavLink } from "@/components/NavLink";
 import {
@@ -13,7 +14,7 @@ import {
   SidebarHeader,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Home, Shield, Palette, BookOpen, Code2, Plug, ChevronLeft, ChevronDown, ChevronRight } from "lucide-react";
+import { Home, Shield, Palette, BookOpen, Code2, Plug, ChevronLeft, ChevronDown, ChevronRight, Download } from "lucide-react";
 import { products } from "@/data/productData";
 import { getEndpointsForProduct, getCategories } from "@/data/apiData";
 import { getIntegrationsForProduct } from "@/data/integrationData";
@@ -249,6 +250,20 @@ export function DocSidebar() {
                   </CollapsibleCategory>
                 );
               })}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupLabel>Export</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton onClick={downloadOpenApiSpec}>
+                  <Download className="h-4 w-4 mr-2" />
+                  {!collapsed && <span>Download OpenAPI Spec</span>}
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
