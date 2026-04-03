@@ -1,16 +1,100 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Link } from "react-router-dom";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Shield, Palette, ArrowRight, BookOpen, Code2, Plug } from "lucide-react";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="docs-prose">
+      <div className="mb-10">
+        <h1 className="text-4xl font-bold mb-3">TruContact Trusted Call Solutions</h1>
+        <p className="text-lg text-muted-foreground max-w-2xl">
+          Transform the call experience to improve engagement, ensure legitimate calls get through,
+          and protect customers against fraud.
+        </p>
+      </div>
+
+      <h2 className="text-2xl font-semibold mb-4">Choose a Product</h2>
+      <div className="grid gap-6 md:grid-cols-2 mb-10">
+        <Card className="group hover:shadow-lg transition-shadow border-2 hover:border-primary/30">
+          <CardHeader>
+            <div className="flex items-center gap-3 mb-2">
+              <div className="p-2.5 rounded-lg bg-primary/10">
+                <Shield className="h-6 w-6 text-primary" />
+              </div>
+              <CardTitle className="text-xl">Spoofed Call Protection</CardTitle>
+            </div>
+            <CardDescription className="text-sm leading-relaxed">
+              Digitally sign outbound calls to prevent fraudsters from spoofing your numbers to protect your customers and your brand.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2 mb-4">
+              <Feature icon={BookOpen} text="Step-by-step setup guide" />
+              <Feature icon={Code2} text="Full API reference" />
+              <Feature icon={Plug} text="Twilio & Genesys integrations" />
+            </div>
+            <Button asChild className="w-full group-hover:bg-primary/90">
+              <Link to="/products/scp">
+                Get Started <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Card className="group hover:shadow-lg transition-shadow border-2 hover:border-accent/30">
+          <CardHeader>
+            <div className="flex items-center gap-3 mb-2">
+              <div className="p-2.5 rounded-lg bg-accent/10">
+                <Palette className="h-6 w-6 text-accent" />
+              </div>
+              <CardTitle className="text-xl">Branded Call Display</CardTitle>
+            </div>
+            <CardDescription className="text-sm leading-relaxed">
+              Improve customer engagement by adding rich branded content — logo, name, and call reason — to the mobile call display.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2 mb-4">
+              <Feature icon={BookOpen} text="Step-by-step setup guide" />
+              <Feature icon={Code2} text="Full API reference" />
+              <Feature icon={Plug} text="Twilio & Genesys integrations" />
+            </div>
+            <Button asChild variant="outline" className="w-full">
+              <Link to="/products/bcd">
+                Get Started <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+
+      <h2 className="text-2xl font-semibold mb-4">Quick Links</h2>
+      <div className="grid gap-3 md:grid-cols-3">
+        <QuickLink to="/products/scp/guide" title="SCP Setup Guide" description="Configure spoofed call protection end-to-end" />
+        <QuickLink to="/products/bcd/guide" title="BCD Setup Guide" description="Set up branded call display for your numbers" />
+        <QuickLink to="/products/scp/api/auth-token" title="Authentication" description="Get started with API authentication" />
+      </div>
     </div>
   );
 };
 
-const Index = PlaceholderIndex;
+function Feature({ icon: Icon, text }: { icon: React.ComponentType<{ className?: string }>; text: string }) {
+  return (
+    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+      <Icon className="h-4 w-4" />
+      <span>{text}</span>
+    </div>
+  );
+}
+
+function QuickLink({ to, title, description }: { to: string; title: string; description: string }) {
+  return (
+    <Link to={to} className="block p-4 rounded-lg border hover:border-primary/30 hover:bg-muted/50 transition-colors">
+      <h3 className="font-medium text-sm mb-1">{title}</h3>
+      <p className="text-xs text-muted-foreground">{description}</p>
+    </Link>
+  );
+}
 
 export default Index;

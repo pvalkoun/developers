@@ -3,8 +3,13 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import Index from "./pages/Index.tsx";
-import NotFound from "./pages/NotFound.tsx";
+import { DocLayout } from "@/components/DocLayout";
+import Index from "./pages/Index";
+import ProductOverview from "./pages/ProductOverview";
+import SetupGuide from "./pages/SetupGuide";
+import ApiEndpointPage from "./pages/ApiEndpointPage";
+import IntegrationPage from "./pages/IntegrationPage";
+import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
@@ -15,8 +20,13 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route element={<DocLayout />}>
+            <Route path="/" element={<Index />} />
+            <Route path="/products/:productId" element={<ProductOverview />} />
+            <Route path="/products/:productId/guide" element={<SetupGuide />} />
+            <Route path="/products/:productId/api/:endpointId" element={<ApiEndpointPage />} />
+            <Route path="/products/:productId/integrations/:integrationId" element={<IntegrationPage />} />
+          </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
