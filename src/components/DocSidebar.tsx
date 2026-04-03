@@ -258,6 +258,10 @@ function ApiCategoryAccordion({
   );
   const [openCategory, setOpenCategory] = useState<string | null>(activeCategory || null);
 
+  const handleToggle = (cat: string) => {
+    setOpenCategory(prev => (prev === cat ? null : cat));
+  };
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>API Reference</SidebarGroupLabel>
@@ -284,32 +288,29 @@ function ApiCategoryAccordion({
             }
 
             return (
-              <Collapsible
-                key={cat}
-                open={isOpen}
-                onOpenChange={(open) => setOpenCategory(open ? cat : null)}
-              >
-                <CollapsibleTrigger className="flex w-full items-center justify-between px-3 py-1.5 text-[10px] uppercase tracking-wider text-sidebar-foreground/50 font-semibold mt-2 hover:text-sidebar-foreground/80 cursor-pointer">
+              <div key={cat}>
+                <button
+                  onClick={() => handleToggle(cat)}
+                  className="flex w-full items-center justify-between px-3 py-1.5 text-[10px] uppercase tracking-wider text-sidebar-foreground/50 font-semibold mt-2 hover:text-sidebar-foreground/80 cursor-pointer"
+                >
                   <span>{cat}</span>
                   {isOpen ? <ChevronDown className="h-3 w-3" /> : <ChevronRight className="h-3 w-3" />}
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  {catEndpoints.map(ep => (
-                    <SidebarMenuItem key={ep.id}>
-                      <SidebarMenuButton asChild>
-                        <NavLink
-                          to={`/products/${productId}/api/${ep.id}`}
-                          activeClassName="bg-sidebar-accent text-sidebar-primary font-medium"
-                          className="flex items-center gap-2 pl-6"
-                        >
-                          <MethodBadge method={ep.method} />
-                          <span className="text-xs truncate">{ep.name}</span>
-                        </NavLink>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </CollapsibleContent>
-              </Collapsible>
+                </button>
+                {isOpen && catEndpoints.map(ep => (
+                  <SidebarMenuItem key={ep.id}>
+                    <SidebarMenuButton asChild>
+                      <NavLink
+                        to={`/products/${productId}/api/${ep.id}`}
+                        activeClassName="bg-sidebar-accent text-sidebar-primary font-medium"
+                        className="flex items-center gap-2 pl-6"
+                      >
+                        <MethodBadge method={ep.method} />
+                        <span className="text-xs truncate">{ep.name}</span>
+                      </NavLink>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </div>
             );
           })}
         </SidebarMenu>
