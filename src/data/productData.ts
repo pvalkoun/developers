@@ -50,28 +50,28 @@ export const products: Product[] = [
         title: "Attach TCS Configuration",
         description: "Enable TCS services and configure carrier distributors.",
         apiEndpointId: "attach-account-tcs",
-        details: "Attach TCS configuration to your account, specifying which carrier distributors (AT&T, T-Mobile, USCC) should be enabled."
+        details: "Attach TCS configuration to your account, specifying the lead generation source and which carrier distributors (AT&T, T-Mobile, Verizon) should be enabled."
       },
       {
         step: 4,
-        title: "Attach SCP Feature",
+        title: "Attach Features",
         description: "Enable the Spoofed Call Protection feature on your account.",
-        apiEndpointId: "attach-feature-scp",
-        details: "Attach the SCP feature type with STIR partner service. This enables STIR/SHAKEN digital signing for your calls."
+        apiEndpointId: "attach-feature",
+        details: "Attach features including SPOOF-CALL-PROTECTION with per-carrier partner enablement (att, tmobile, verizon). Multiple features can be attached in a single request."
       },
       {
         step: 5,
         title: "Create Caller Profile",
         description: "Define how your organization appears on outbound calls.",
         apiEndpointId: "attach-scp-caller-profile",
-        details: "Create a caller profile with your organization's display name. This profile is associated with the SCP feature."
+        details: "Create a caller profile with CCID-ORIG and SPOOF-CALL-PROTECTION service configuration. Each carrier partner status will be set to TU-Review-Requested."
       },
       {
         step: 6,
         title: "Register Phone Numbers",
         description: "Add your telephone numbers to be protected.",
         apiEndpointId: "create-tn-asset",
-        details: "Register each telephone number (TN) as an asset and link it to your caller profile. Once active, outbound calls from these numbers will be digitally signed."
+        details: "Register each telephone number (TN) as an asset and link it to your caller profile. Use full_ownership: true for numbers you own directly, or full_ownership: false for BYOC numbers managed through third-party carriers like Twilio or Genesys."
       }
     ]
   },
@@ -108,28 +108,28 @@ export const products: Product[] = [
         title: "Attach TCS Configuration",
         description: "Enable TCS services and configure carrier distributors.",
         apiEndpointId: "attach-account-tcs",
-        details: "Attach TCS configuration to your account, specifying which carrier distributors should display your branded content."
+        details: "Attach TCS configuration to your account, specifying the lead generation source and which carrier distributors should display your branded content."
       },
       {
         step: 4,
-        title: "Attach BCD Feature",
+        title: "Attach Features",
         description: "Enable the Branded Call Display feature on your account.",
-        apiEndpointId: "attach-feature-bcd",
-        details: "Attach the RICH-BCD feature type with DISPLAY partner service. This enables rich branded content on your outbound calls."
+        apiEndpointId: "attach-feature",
+        details: "Attach features including RICH-BCD with per-carrier partner enablement. You can also attach AUTH-BCD and NAME-BCD in the same request for different branding tiers."
       },
       {
         step: 5,
         title: "Create Caller Profile",
         description: "Define your brand's visual identity for outbound calls.",
         apiEndpointId: "attach-bcd-caller-profile",
-        details: "Create a caller profile with your organization's display name, logo, and call reason. This rich content will be shown on the recipient's device."
+        details: "Create a caller profile with your branded_caller_name, call_reason, and image_profile_id for logo display. The RICH-BCD service is configured with per-carrier partner statuses."
       },
       {
         step: 6,
         title: "Register Phone Numbers",
         description: "Add your telephone numbers for branded display.",
         apiEndpointId: "create-tn-asset",
-        details: "Register each telephone number (TN) and link it to your branded caller profile. Calls from these numbers will display your branded content."
+        details: "Register each telephone number (TN) and link it to your branded caller profile. Use full_ownership: true for numbers you own directly, or full_ownership: false for BYOC numbers managed through third-party carriers like Twilio or Genesys."
       }
     ]
   }
