@@ -97,12 +97,16 @@
 /* Code blocks */
 .code-block {
   @apply rounded-lg text-sm font-mono overflow-x-auto;
-  background: hsl(200 50% 7%);
-  color: hsl(210 20% 85%);
+  background: hsl(220 13% 18%);
+  color: hsl(210 14% 83%);
 }
 
 .code-block pre {
   @apply p-4;
+}
+
+.code-block code {
+  color: hsl(210 14% 83%);
 }
 
 /* Method badges */

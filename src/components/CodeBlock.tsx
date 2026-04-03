@@ -37,11 +37,11 @@ export function CodeBlock({ code, language = "json", title }: CodeBlockProps) {
       )}
       <div className="code-block group relative">
         <pre className="p-4 overflow-x-auto text-sm">
-          <code>{code}</code>
+          <code className="text-[hsl(210_14%_83%)]">{code}</code>
         </pre>
         {!title && (
           <div className="absolute right-2 top-2">
-            <Button variant="ghost" size="icon" onClick={handleCopy} className="h-7 w-7 text-muted-foreground hover:text-foreground bg-background/10 hover:bg-background/20">
+            <Button variant="ghost" size="icon" onClick={handleCopy} className="h-7 w-7 text-[hsl(210_14%_73%)] hover:text-[hsl(210_14%_93%)] bg-[hsl(220_13%_24%)] hover:bg-[hsl(220_13%_28%)]">
               {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
             </Button>
           </div>

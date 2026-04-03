@@ -76,7 +76,7 @@ export default function SetupGuide() {
             <Link to={`/products/${productId}/api/auth-token`}>Explore API Reference</Link>
           </Button>
           <Button asChild variant="outline" size="sm">
-            <Link to={`/products/${productId}/integrations/twilio`}>View Integrations</Link>
+            <Link to={`/integrations/twilio`}>View Integrations</Link>
           </Button>
         </div>
       </div>
