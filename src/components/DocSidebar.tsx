@@ -136,7 +136,7 @@ export function DocSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        <SidebarGroup defaultOpen>
+        <SidebarGroup>
           <SidebarGroupLabel>API Reference</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
