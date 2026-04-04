@@ -40,9 +40,9 @@ export function DocSidebar() {
       <Sidebar collapsible="icon">
         <SidebarHeader className="p-4 border-b border-sidebar-border">
           {!collapsed && (
-            <NavLink to="/" className="flex items-center gap-2 text-sidebar-foreground font-bold text-lg">
-              <span className="text-sidebar-primary">TCS</span>
-              <span>Developer Docs</span>
+            <NavLink to="/" className="flex items-center gap-2">
+              <img src={transunionLogo} alt="TransUnion" className="h-6" />
+              <span className="text-sidebar-foreground font-semibold text-sm">Developer Docs</span>
             </NavLink>
           )}
         </SidebarHeader>
