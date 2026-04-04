@@ -16,8 +16,8 @@ const Index = () => {
 
       <h2 className="text-2xl font-semibold mb-4">Choose a Product</h2>
       <div className="grid gap-6 md:grid-cols-2 mb-10">
-        <Card className="group hover:shadow-lg transition-shadow border-2 hover:border-primary/30">
-          <CardHeader>
+        <Card className="group hover:shadow-lg transition-shadow border-2 hover:border-primary/30 flex flex-col">
+          <CardHeader className="flex-1">
             <div className="flex items-center gap-3 mb-2">
               <div className="p-2.5 rounded-lg bg-primary/10">
                 <Shield className="h-6 w-6 text-primary" />
@@ -28,7 +28,7 @@ const Index = () => {
               Digitally sign outbound calls to prevent fraudsters from spoofing your numbers to protect your customers and your brand.
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="mt-auto">
             <div className="space-y-2 mb-4">
               <Feature icon={BookOpen} text="Step-by-step setup guide" />
               <Feature icon={Code2} text="Full API reference" />
@@ -41,8 +41,8 @@ const Index = () => {
           </CardContent>
         </Card>
 
-        <Card className="group hover:shadow-lg transition-shadow border-2 hover:border-accent/30">
-          <CardHeader>
+        <Card className="group hover:shadow-lg transition-shadow border-2 hover:border-accent/30 flex flex-col">
+          <CardHeader className="flex-1">
             <div className="flex items-center gap-3 mb-2">
               <div className="p-2.5 rounded-lg bg-accent/10">
                 <Palette className="h-6 w-6 text-accent" />
@@ -53,7 +53,7 @@ const Index = () => {
               Improve customer engagement by adding rich branded content — logo, name, and call reason — to the mobile call display.
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="mt-auto">
             <div className="space-y-2 mb-4">
               <Feature icon={BookOpen} text="Step-by-step setup guide" />
               <Feature icon={Code2} text="Full API reference" />
