@@ -244,6 +244,14 @@ export function DocSidebar() {
                     </CollapsibleContent>
                   </SidebarMenuItem>
                 </Collapsible>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink to="/resources/webhooks" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
+                      <Bell className="h-4 w-4 mr-2" />
+                      {!collapsed && <span>Webhooks</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
