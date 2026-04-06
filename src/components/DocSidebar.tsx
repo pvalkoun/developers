@@ -142,6 +142,21 @@ export function DocSidebar() {
               </CollapsibleContent>
             </SidebarGroup>
           </Collapsible>
+          <SidebarGroup>
+            <SidebarGroupLabel>Resources</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink to="/resources/analytics" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
+                      <BarChart3 className="h-4 w-4 mr-2" />
+                      {!collapsed && <span>Analytics</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
         </SidebarContent>
       </Sidebar>
     );
