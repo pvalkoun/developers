@@ -76,9 +76,17 @@ export function DocSidebar() {
               <SidebarMenu>
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild>
-                    <NavLink to="/products/scp" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
-                      <Shield className="h-4 w-4 mr-2" />
-                      {!collapsed && <span>Spoofed Call Protection</span>}
+                    <NavLink to="/pre-call-auth" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
+                      <Phone className="h-4 w-4 mr-2" />
+                      {!collapsed && <span>Pre-Call Authentication</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink to="/products/cno" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
+                      <Tag className="h-4 w-4 mr-2" />
+                      {!collapsed && <span>Spam Tag Mitigation</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -87,6 +95,14 @@ export function DocSidebar() {
                     <NavLink to="/products/bcd" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
                       <Palette className="h-4 w-4 mr-2" />
                       {!collapsed && <span>Branded Call Display</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink to="/products/scp" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
+                      <Shield className="h-4 w-4 mr-2" />
+                      {!collapsed && <span>Spoofed Call Protection</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
