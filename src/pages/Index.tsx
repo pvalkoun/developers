@@ -71,7 +71,7 @@ const Index = () => {
       <div className="grid gap-3 md:grid-cols-3">
         <QuickLink to="/products/scp/guide" title="SCP Setup Guide" description="Configure spoofed call protection end-to-end" />
         <QuickLink to="/products/bcd/guide" title="BCD Setup Guide" description="Set up branded call display for your numbers" />
-        <QuickLink to="/products/scp/api/auth-token" title="Authentication" description="Get started with API authentication" />
+        <QuickLink to="/pre-call-auth" title="Pre-Call Authentication" description="Required prerequisite for SCP and BCD to function" />
       </div>
     </div>
   );

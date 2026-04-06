@@ -11,6 +11,7 @@ import SetupGuide from "./pages/SetupGuide";
 import ApiEndpointPage from "./pages/ApiEndpointPage";
 import IntegrationPage from "./pages/IntegrationPage";
 import Changelog from "./pages/Changelog";
+import PreCallAuth from "./pages/PreCallAuth";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
