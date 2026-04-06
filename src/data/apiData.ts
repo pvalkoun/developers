@@ -561,6 +561,118 @@ export const apiEndpoints: ApiEndpoint[] = [
     product: ["common"]
   },
 
+  // ── Image Profile ──
+  {
+    id: "create-image-profile",
+    category: "Image Profile",
+    name: "Create Image Profile",
+    method: "POST",
+    path: "/ccid/sdpr/v4/admin/account/{accountId}/image-profile",
+    description: "Upload an image profile for use with Branded Call Display. Submit a public image URL and receive an internal TransUnion image URL and profile ID that can be referenced in caller profiles.",
+    headers: [{ key: "Content-Type", value: "application/json" }, { key: "Accept", value: "application/json" }],
+    requestBody: `{
+  "public_image_url": "https://example.com/logo.png",
+  "service": [
+    {
+      "name": "RICH-BCD",
+      "partner": [
+        {
+          "name": "att",
+          "status": "TU-Review-Requested"
+        },
+        {
+          "name": "tmobile",
+          "status": "TU-Review-Requested"
+        },
+        {
+          "name": "verizon",
+          "status": "TU-Review-Requested"
+        }
+      ]
+    }
+  ]
+}`,
+    responseBody: `{
+  "id": "699f620c6ccc0121aeb7eef4",
+  "account_id": "x59tj8rtv1",
+  "image_url": "https://tcs.transunion.com/images/699f620c6ccc0121aeb7eef4.png",
+  "public_image_url": "https://example.com/logo.png",
+  "service": [
+    {
+      "name": "RICH-BCD",
+      "partner": [
+        {
+          "name": "att",
+          "status": "TU-Review-Requested"
+        },
+        {
+          "name": "tmobile",
+          "status": "TU-Review-Requested"
+        },
+        {
+          "name": "verizon",
+          "status": "TU-Review-Requested"
+        }
+      ]
+    }
+  ],
+  "created_by": "user_v4_api_prod",
+  "created_date": "Wed, 25 Feb 2026 20:15:08 GMT"
+}`,
+    responseStatus: 201,
+    product: ["bcd"]
+  },
+  {
+    id: "get-image-profile",
+    category: "Image Profile",
+    name: "Get Image Profile",
+    method: "GET",
+    path: "/ccid/sdpr/v4/admin/account/{accountId}/image-profile/{imageProfileId}",
+    description: "Retrieve an image profile by ID, including the internal TransUnion image URL and partner statuses.",
+    headers: [{ key: "Accept", value: "application/json" }],
+    responseBody: `{
+  "id": "699f620c6ccc0121aeb7eef4",
+  "account_id": "x59tj8rtv1",
+  "image_url": "https://tcs.transunion.com/images/699f620c6ccc0121aeb7eef4.png",
+  "public_image_url": "https://example.com/logo.png",
+  "service": [
+    {
+      "name": "RICH-BCD",
+      "partner": [
+        {
+          "name": "att",
+          "status": "Enable-Completed"
+        },
+        {
+          "name": "tmobile",
+          "status": "Enable-Completed"
+        },
+        {
+          "name": "verizon",
+          "status": "Enable-Completed"
+        }
+      ]
+    }
+  ],
+  "created_by": "user_v4_api_prod",
+  "created_date": "Wed, 25 Feb 2026 20:15:08 GMT"
+}`,
+    responseStatus: 200,
+    product: ["bcd"]
+  },
+  {
+    id: "delete-image-profile",
+    category: "Image Profile",
+    name: "Delete Image Profile",
+    method: "DELETE",
+    path: "/ccid/sdpr/v4/admin/account/{accountId}/image-profile/{imageProfileId}",
+    description: "Delete an image profile from an account. The image profile must not be referenced by any active caller profiles.",
+    headers: [{ key: "Accept", value: "application/json" }],
+    responseBody: `{}`,
+    responseStatus: 200,
+    product: ["bcd"]
+  },
+
   // ── Caller Profile ──
   {
     id: "attach-scp-caller-profile",

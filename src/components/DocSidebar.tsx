@@ -14,7 +14,7 @@ import {
   SidebarHeader,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Home, Shield, Palette, BookOpen, Code2, Plug, ChevronLeft, ChevronDown, ChevronRight, Download } from "lucide-react";
+import { Home, Shield, Palette, BookOpen, Code2, Plug, ChevronLeft, ChevronDown, ChevronRight, Download, ClipboardList } from "lucide-react";
 import { products } from "@/data/productData";
 import { getEndpointsForProduct, getCategories } from "@/data/apiData";
 import { getIntegrationsForProduct } from "@/data/integrationData";
@@ -52,10 +52,18 @@ export function DocSidebar() {
             <SidebarGroupContent>
               <SidebarMenu>
                 <SidebarMenuItem>
+55:                   <SidebarMenuButton asChild>
+56:                     <NavLink to="/" end activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
+57:                       <Home className="h-4 w-4 mr-2" />
+58:                       {!collapsed && <span>Home</span>}
+59:                     </NavLink>
+60:                   </SidebarMenuButton>
+61:                 </SidebarMenuItem>
+                <SidebarMenuItem>
                   <SidebarMenuButton asChild>
-                    <NavLink to="/" end activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
-                      <Home className="h-4 w-4 mr-2" />
-                      {!collapsed && <span>Home</span>}
+                    <NavLink to="/changelog" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
+                      <ClipboardList className="h-4 w-4 mr-2" />
+                      {!collapsed && <span>Changelog</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

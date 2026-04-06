@@ -119,13 +119,20 @@ export const products: Product[] = [
       },
       {
         step: 5,
-        title: "Create Caller Profile",
-        description: "Define your brand's visual identity for outbound calls.",
-        apiEndpointId: "attach-bcd-caller-profile",
-        details: "Create a caller profile with your branded_caller_name, call_reason, and image_profile_id for logo display. The RICH-BCD service is configured with per-carrier partner statuses."
+        title: "Create Image Profile",
+        description: "Upload your company logo for display on recipient devices.",
+        apiEndpointId: "create-image-profile",
+        details: "Submit your public image URL to create an image profile. TransUnion will process and host the image internally. The returned image_profile_id is required when creating a Rich BCD caller profile."
       },
       {
         step: 6,
+        title: "Create Caller Profile",
+        description: "Define your brand's visual identity for outbound calls.",
+        apiEndpointId: "attach-bcd-caller-profile",
+        details: "Create a caller profile with your branded_caller_name, call_reason, and the image_profile_id from the previous step for logo display. The RICH-BCD service is configured with per-carrier partner statuses."
+      },
+      {
+        step: 7,
         title: "Register Phone Numbers",
         description: "Add your telephone numbers for branded display.",
         apiEndpointId: "create-tn-asset",

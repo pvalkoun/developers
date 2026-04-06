@@ -221,6 +221,52 @@ export const endpointFieldDocs: Record<string, EndpointFieldDocs> = {
     ],
   },
 
+  "create-image-profile": {
+    pathParams: [
+      { path: "accountId", type: "String", required: true, description: "Unique identifier of the account", constraints: "Length between 4 and 10" },
+    ],
+    requestFields: [
+      { path: "public_image_url", type: "String", required: true, description: "Publicly accessible URL of the image to use as the brand logo", constraints: "Must be a valid HTTPS URL pointing to a PNG or JPEG image" },
+      { path: "service[]", type: "Array", required: true, description: "Service configuration for the image profile" },
+      { path: "service[].name", type: "String", required: true, description: "Service name", constraints: "Must be RICH-BCD" },
+      { path: "service[].partner[]", type: "Array", required: true, description: "Carrier partner configurations" },
+      { path: "service[].partner[].name", type: "String", required: true, description: "Carrier partner name", constraints: "att, verizon, or tmobile" },
+      { path: "service[].partner[].status", type: "String", required: true, description: "Initial review status", constraints: "Use TU-Review-Requested to submit for TransUnion review" },
+    ],
+    responseFields: [
+      { path: "id", type: "String", required: true, description: "Unique image profile ID assigned by the system", constraints: "24-character hex string" },
+      { path: "account_id", type: "String", required: true, description: "The account this image profile belongs to" },
+      { path: "image_url", type: "String", required: true, description: "Internal TransUnion-hosted URL for the processed image" },
+      { path: "public_image_url", type: "String", required: true, description: "The original public URL submitted" },
+      { path: "service[]", type: "Array", required: true, description: "Service configuration with partner statuses" },
+      { path: "created_by", type: "String", required: true, description: "User who created the image profile" },
+      { path: "created_date", type: "DateTime", required: true, description: "Creation timestamp", constraints: "RFC 1123 format" },
+    ],
+  },
+
+  "get-image-profile": {
+    pathParams: [
+      { path: "accountId", type: "String", required: true, description: "Unique identifier of the account" },
+      { path: "imageProfileId", type: "String", required: true, description: "Unique image profile ID", constraints: "24-character hex string" },
+    ],
+    responseFields: [
+      { path: "id", type: "String", required: true, description: "Image profile ID" },
+      { path: "account_id", type: "String", required: true, description: "The account this image profile belongs to" },
+      { path: "image_url", type: "String", required: true, description: "Internal TransUnion-hosted image URL" },
+      { path: "public_image_url", type: "String", required: true, description: "Original public URL submitted" },
+      { path: "service[]", type: "Array", required: true, description: "Service configuration with current partner statuses" },
+      { path: "created_by", type: "String", required: true, description: "Creator user ID" },
+      { path: "created_date", type: "DateTime", required: true, description: "Creation timestamp" },
+    ],
+  },
+
+  "delete-image-profile": {
+    pathParams: [
+      { path: "accountId", type: "String", required: true, description: "Unique identifier of the account" },
+      { path: "imageProfileId", type: "String", required: true, description: "Unique image profile ID to delete", constraints: "Must not be referenced by any active caller profiles" },
+    ],
+  },
+
   "attach-scp-caller-profile": {
     pathParams: [
       { path: "accountId", type: "String", required: true, description: "Unique identifier of the account" },
