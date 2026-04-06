@@ -40,15 +40,10 @@ import genesysCampaignRuleset from "@/assets/genesys/genesys-campaign-ruleset.jp
 import genesysDataActionPerf from "@/assets/genesys/genesys-data-action-perf.jpg";
 import genesysCampaignPerf from "@/assets/genesys/genesys-campaign-perf.jpg";
 
-// Image imports for Plivo integration
-import plivoPhloBuilder from "@/assets/plivo/plivo-phlo-builder.jpg";
-import plivoFlowNodes from "@/assets/plivo/plivo-flow-nodes.jpg";
-
-// Image imports for Amazon Connect integration
-import amazonConnectSecretsManager from "@/assets/amazon-connect/amazon-connect-secrets-manager.jpg";
-import amazonConnectLambdaEnv from "@/assets/amazon-connect/amazon-connect-lambda-env.jpg";
-import amazonConnectContactFlow from "@/assets/amazon-connect/amazon-connect-contact-flow.jpg";
-import amazonConnectTestLogs from "@/assets/amazon-connect/amazon-connect-test-logs.jpg";
+// Image imports for Amazon Connect integration (real screenshots from PDF)
+import amazonConnectContactFlow from "@/assets/amazon-connect/amazon-connect-contact-flow.png";
+import amazonConnectLambdaConfig from "@/assets/amazon-connect/amazon-connect-lambda-config.png";
+import amazonConnectCloudwatchLogs from "@/assets/amazon-connect/amazon-connect-cloudwatch-logs.png";
 
 export const integrations: Integration[] = [
   {
@@ -433,10 +428,7 @@ client.calls.create(
       },
       {
         title: "Step 1 — Create a New PHLO",
-        content: "1. Log in to the **Plivo Console**\n2. Navigate to **PHLO** → **Create New**\n3. Add a **Start** node and enable **API Request** or **Incoming Call** as the trigger\n4. The PHLO builder canvas will open with your Start node ready for configuration",
-        images: [
-          { src: plivoPhloBuilder, alt: "Plivo Console — PHLO Builder with Start node", caption: "The Plivo PHLO Builder canvas with the Start node configured" }
-        ]
+        content: "1. Log in to the **Plivo Console**\n2. Navigate to **PHLO** → **Create New**\n3. Add a **Start** node and enable **API Request** or **Incoming Call** as the trigger\n4. The PHLO builder canvas will open with your Start node ready for configuration"
       },
       {
         title: "Step 2 — Configure CCID HTTP Request",
@@ -457,10 +449,7 @@ client.calls.create(
       },
       {
         title: "Step 5 — Connect Nodes",
-        content: "Connect the nodes in the following order:\n\n**Start** → **CCID HTTP Request (Success)** → **Initiate Call** → **Play Notification**\n\nHandle the CCID **Failed** path with fallback logic if needed (e.g., skip authentication and proceed with the call, or log an error).",
-        images: [
-          { src: plivoFlowNodes, alt: "Plivo PHLO — Connected flow nodes", caption: "The complete PHLO flow with all nodes connected" }
-        ]
+        content: "Connect the nodes in the following order:\n\n**Start** → **CCID HTTP Request (Success)** → **Initiate Call** → **Play Notification**\n\nHandle the CCID **Failed** path with fallback logic if needed (e.g., skip authentication and proceed with the call, or log an error)."
       },
       {
         title: "Step 6 — Test & Validate",
@@ -501,16 +490,13 @@ client.calls.create(
       },
       {
         title: "Step 2 — Setup AWS Secrets Manager",
-        content: "Create a secret in AWS Secrets Manager to securely store the CCID API credentials.\n\n1. Open the **AWS Secrets Manager** console\n2. Click **Store a new secret**\n3. Select **Other type of secret**\n4. Add the following key-value pairs:\n\n| Key | Description | Value (Example) |\n|-----|-------------|----------------|\n| `neustarURL` | TransUnion AS REST API Endpoint | `https://ccid-aws-authn.neustarlab.biz/ccid/authn/v2/identity` |\n| `neustarAPIKey` | API key for client authentication | `4dcafb32537d91c90737f7d840c` |\n\n**Note:** The URL and API key shown are examples. Contact TransUnion Support for your actual production credentials.",
-        images: [
-          { src: amazonConnectSecretsManager, alt: "AWS Secrets Manager — Secret configuration with CCID keys", caption: "Configuring the AWS Secrets Manager with the CCID API endpoint and key" }
-        ]
+        content: "Create a secret in AWS Secrets Manager to securely store the CCID API credentials.\n\n1. Open the **AWS Secrets Manager** console\n2. Click **Store a new secret**\n3. Select **Other type of secret**\n4. Add the following key-value pairs:\n\n| Key | Description | Value (Example) |\n|-----|-------------|----------------|\n| `neustarURL` | TransUnion AS REST API Endpoint | `https://ccid-aws-authn.neustarlab.biz/ccid/authn/v2/identity` |\n| `neustarAPIKey` | API key for client authentication | `4dcafb32537d91c90737f7d840c` |\n\n**Note:** The URL and API key shown are examples. Contact TransUnion Support for your actual production credentials."
       },
       {
         title: "Step 3 — Create Lambda Function",
         content: "1. **Create an IAM Role** for Lambda & Secrets Manager:\n   - Go to **IAM Console** → **Roles** → **Create Role**\n   - Select **AWS Service** → **Lambda**\n   - Attach the following policies:\n     - `AWSLambdaBasicExecutionRole` — For Lambda execution and CloudWatch logging\n     - `secretsmanager:GetSecretValue` — For Secrets Manager access\n\n2. **Create the Lambda Function**:\n   - Go to **Lambda Console** → **Create Function**\n   - Upload the integration code provided by TransUnion\n   - Select the IAM role created in step 1\n   - Note the **ARN** displayed (e.g., `arn:aws:lambda:us-east-1:9041431XXXX:function:CALLOUT`)\n\n3. **Create Environment Variable**:\n   - Add an environment variable called `neustarSecret`\n   - Set the value to the secret name created in Step 2\n\nThe Lambda function will use the following contact data parameters:\n\n| Parameter | Description | Example |\n|-----------|-------------|--------|\n| `event.Details.ContactData.CustomerEndpoint.Address` | Called Party | `+12028232026` |\n| `event.Details.ContactData.SystemEndpoint.Address` | Calling Party | `+18134356550` |",
         images: [
-          { src: amazonConnectLambdaEnv, alt: "AWS Lambda — Environment variable configuration", caption: "Setting the neustarSecret environment variable in the Lambda function" }
+          { src: amazonConnectLambdaConfig, alt: "AWS Lambda — Function configuration panel", caption: "Lambda function configuration showing the ARN and environment settings" }
         ]
       },
       {
@@ -522,7 +508,7 @@ client.calls.create(
       },
       {
         title: "Step 5 — Test the Flow",
-        content: "Once all configuration is complete, test the end-to-end call flow.\n\n1. Make an outbound call from Amazon Connect\n2. Verify the call connects successfully\n3. Contact TransUnion support to confirm Call Sign requests are reaching the AS micro service\n4. Check **CloudWatch Logs** for the Lambda function execution\n\n**Step 1 — Verify REST API Call Log:**\nCheck that request parameters are correctly populated:",
+        content: "Once all configuration is complete, test the end-to-end call flow.\n\n1. Make an outbound call from Amazon Connect\n2. Verify the call connects successfully\n3. Contact TransUnion support to confirm Call Sign requests are reaching the AS micro service\n4. Check **CloudWatch Logs** for the Lambda function execution\n\n**Verify REST API Call Log:**\nCheck that request parameters are correctly populated:",
         code: `// CloudWatch Log — REST API Call
 {
   "from": "tel:+18134356550",
@@ -530,7 +516,7 @@ client.calls.create(
 }`,
         language: "json",
         images: [
-          { src: amazonConnectTestLogs, alt: "Amazon Connect — CloudWatch test logs showing successful API calls", caption: "CloudWatch logs showing successful REST API calls and responses" }
+          { src: amazonConnectCloudwatchLogs, alt: "Amazon Connect — CloudWatch logs showing API call details", caption: "CloudWatch logs showing the REST API request parameters and HTTPS options" }
         ]
       },
       {
