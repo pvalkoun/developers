@@ -1248,15 +1248,15 @@ export const apiEndpoints: ApiEndpoint[] = [
   }
 ];
 
-export const getEndpointsForProduct = (product: "scp" | "bcd") => {
-  return apiEndpoints.filter(ep => ep.product?.includes(product) || ep.product?.includes("common"));
+export const getEndpointsForProduct = (product: "scp" | "bcd" | "cno") => {
+  return apiEndpoints.filter(ep => ep.product?.includes(product as "scp" | "bcd") || ep.product?.includes("common"));
 };
 
 export const getEndpointById = (id: string) => {
   return apiEndpoints.find(ep => ep.id === id);
 };
 
-export const getCategories = (product?: "scp" | "bcd") => {
+export const getCategories = (product?: "scp" | "bcd" | "cno") => {
   const eps = product ? getEndpointsForProduct(product) : apiEndpoints;
   const cats: string[] = [];
   eps.forEach(ep => {

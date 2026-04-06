@@ -14,7 +14,7 @@ import {
   SidebarHeader,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Home, Shield, Palette, BookOpen, Code2, Plug, ChevronLeft, ChevronDown, ChevronRight, Download, ClipboardList, Phone } from "lucide-react";
+import { Home, Shield, Palette, BookOpen, Code2, Plug, ChevronLeft, ChevronDown, ChevronRight, Download, ClipboardList, Phone, Tag } from "lucide-react";
 import { products } from "@/data/productData";
 import { getEndpointsForProduct, getCategories } from "@/data/apiData";
 import { getIntegrationsForProduct } from "@/data/integrationData";
@@ -30,7 +30,7 @@ export function DocSidebar() {
   const collapsed = state === "collapsed";
 
   const pathParts = location.pathname.split("/");
-  const productId = pathParts[2] as "scp" | "bcd" | undefined;
+  const productId = pathParts[2] as "scp" | "bcd" | "cno" | undefined;
   const product = products.find(p => p.id === productId);
   const isIntegrationsSection = pathParts[3] === "integrations";
 
@@ -61,14 +61,6 @@ export function DocSidebar() {
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild>
-                    <NavLink to="/pre-call-auth" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
-                      <Phone className="h-4 w-4 mr-2" />
-                      {!collapsed && <span>Pre-Call Authentication</span>}
-                    </NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
                     <NavLink to="/changelog" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
                       <ClipboardList className="h-4 w-4 mr-2" />
                       {!collapsed && <span>Changelog</span>}
@@ -84,9 +76,17 @@ export function DocSidebar() {
               <SidebarMenu>
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild>
-                    <NavLink to="/products/scp" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
-                      <Shield className="h-4 w-4 mr-2" />
-                      {!collapsed && <span>Spoofed Call Protection</span>}
+                    <NavLink to="/pre-call-auth" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
+                      <Phone className="h-4 w-4 mr-2" />
+                      {!collapsed && <span>Pre-Call Authentication</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink to="/products/cno" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
+                      <Tag className="h-4 w-4 mr-2" />
+                      {!collapsed && <span>Spam Tag Mitigation</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -95,6 +95,14 @@ export function DocSidebar() {
                     <NavLink to="/products/bcd" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
                       <Palette className="h-4 w-4 mr-2" />
                       {!collapsed && <span>Branded Call Display</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink to="/products/scp" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
+                      <Shield className="h-4 w-4 mr-2" />
+                      {!collapsed && <span>Spoofed Call Protection</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -210,7 +218,7 @@ export function DocSidebar() {
               All Products
             </Button>
             <div className="flex items-center gap-2">
-              {productId === "scp" ? <Shield className="h-5 w-5 text-sidebar-primary" /> : <Palette className="h-5 w-5 text-sidebar-primary" />}
+              {productId === "scp" ? <Shield className="h-5 w-5 text-sidebar-primary" /> : productId === "cno" ? <Tag className="h-5 w-5 text-sidebar-primary" /> : <Palette className="h-5 w-5 text-sidebar-primary" />}
               <span className="font-bold text-sidebar-foreground">{product!.name}</span>
             </div>
           </div>

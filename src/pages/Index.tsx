@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Shield, Palette, ArrowRight, BookOpen, Code2 } from "lucide-react";
+import { Shield, Palette, ArrowRight, BookOpen, Code2, Phone, Tag } from "lucide-react";
 
 const Index = () => {
   return (
@@ -20,12 +20,37 @@ const Index = () => {
           <CardHeader className="flex-1">
             <div className="flex items-center gap-3 mb-2">
               <div className="p-2.5 rounded-lg bg-primary/10">
-                <Shield className="h-6 w-6 text-primary" />
+                <Phone className="h-6 w-6 text-primary" />
               </div>
-              <CardTitle className="text-xl">Spoofed Call Protection</CardTitle>
+              <CardTitle className="text-xl">Pre-Call Authentication</CardTitle>
             </div>
             <CardDescription className="text-sm leading-relaxed">
-              Digitally sign outbound calls to prevent fraudsters from spoofing your numbers to protect your customers and your brand.
+              Verify caller identity in real-time using STIR/SHAKEN. Required prerequisite for all TruContact products.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="mt-auto">
+            <div className="space-y-2 mb-4">
+              <Feature icon={BookOpen} text="CCID API documentation" />
+              <Feature icon={Code2} text="Identity verification endpoint" />
+            </div>
+            <Button asChild className="w-full bg-accent text-accent-foreground hover:bg-accent/90 font-semibold">
+              <Link to="/pre-call-auth">
+                Get Started <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Card className="group hover:shadow-lg transition-shadow border-2 hover:border-accent/30 flex flex-col">
+          <CardHeader className="flex-1">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="p-2.5 rounded-lg bg-accent/10">
+                <Tag className="h-6 w-6 text-accent" />
+              </div>
+              <CardTitle className="text-xl">Spam Tag Mitigation (CNO)</CardTitle>
+            </div>
+            <CardDescription className="text-sm leading-relaxed">
+              Prevent your legitimate calls from being mislabeled as spam or fraud by carrier analytics engines.
             </CardDescription>
           </CardHeader>
           <CardContent className="mt-auto">
@@ -34,7 +59,7 @@ const Index = () => {
               <Feature icon={Code2} text="Full API reference" />
             </div>
             <Button asChild className="w-full bg-accent text-accent-foreground hover:bg-accent/90 font-semibold">
-              <Link to="/products/scp">
+              <Link to="/products/cno">
                 Get Started <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -65,13 +90,38 @@ const Index = () => {
             </Button>
           </CardContent>
         </Card>
+
+        <Card className="group hover:shadow-lg transition-shadow border-2 hover:border-primary/30 flex flex-col">
+          <CardHeader className="flex-1">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="p-2.5 rounded-lg bg-primary/10">
+                <Shield className="h-6 w-6 text-primary" />
+              </div>
+              <CardTitle className="text-xl">Spoofed Call Protection</CardTitle>
+            </div>
+            <CardDescription className="text-sm leading-relaxed">
+              Digitally sign outbound calls to prevent fraudsters from spoofing your numbers to protect your customers and your brand.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="mt-auto">
+            <div className="space-y-2 mb-4">
+              <Feature icon={BookOpen} text="Step-by-step setup guide" />
+              <Feature icon={Code2} text="Full API reference" />
+            </div>
+            <Button asChild className="w-full bg-accent text-accent-foreground hover:bg-accent/90 font-semibold">
+              <Link to="/products/scp">
+                Get Started <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
       </div>
 
       <h2 className="text-2xl font-semibold mb-4">Quick Links</h2>
       <div className="grid gap-3 md:grid-cols-3">
+        <QuickLink to="/pre-call-auth" title="Pre-Call Authentication" description="Required prerequisite for SCP and BCD to function" />
         <QuickLink to="/products/scp/guide" title="SCP Setup Guide" description="Configure spoofed call protection end-to-end" />
         <QuickLink to="/products/bcd/guide" title="BCD Setup Guide" description="Set up branded call display for your numbers" />
-        <QuickLink to="/pre-call-auth" title="Pre-Call Authentication" description="Required prerequisite for SCP and BCD to function" />
       </div>
     </div>
   );
