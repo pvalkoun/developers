@@ -332,7 +332,7 @@ client.calls.create(
       {
         title: "Step 3.2 — Configuration",
         content: "Configure the HTTP request details to call the TransUnion CCID API.\n\n1. **HTTP Method**: Select `POST`\n2. **Request URL Template**: `https://authn.ccid.neustar.biz/ccid/authn/v2/identity?apiKey=<APIKEY>`\n   - Replace `<APIKEY>` with the actual API key provided by TransUnion\n3. **Execution Timeout**: Set to `60` seconds\n4. **Request Body Template**:",
-        code: `{"from":"tel:+1${input.fromNumber}","to":"tel:+1${input.toNumber}"}`,
+        code: `{"from":"tel:+1\${input.fromNumber}","to":"tel:+1\${input.toNumber}"}`,
         language: "json",
         images: [
           { src: genesysConfiguration, alt: "Genesys Cloud — Request URL, body template and response configuration", caption: "The full Configuration tab showing URL, headers, body template, and response mapping" }
