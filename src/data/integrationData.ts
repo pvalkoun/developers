@@ -40,15 +40,10 @@ import genesysCampaignRuleset from "@/assets/genesys/genesys-campaign-ruleset.jp
 import genesysDataActionPerf from "@/assets/genesys/genesys-data-action-perf.jpg";
 import genesysCampaignPerf from "@/assets/genesys/genesys-campaign-perf.jpg";
 
-// Image imports for Plivo integration
-import plivoPhloBuilder from "@/assets/plivo/plivo-phlo-builder.jpg";
-import plivoFlowNodes from "@/assets/plivo/plivo-flow-nodes.jpg";
-
-// Image imports for Amazon Connect integration
-import amazonConnectSecretsManager from "@/assets/amazon-connect/amazon-connect-secrets-manager.jpg";
-import amazonConnectLambdaEnv from "@/assets/amazon-connect/amazon-connect-lambda-env.jpg";
-import amazonConnectContactFlow from "@/assets/amazon-connect/amazon-connect-contact-flow.jpg";
-import amazonConnectTestLogs from "@/assets/amazon-connect/amazon-connect-test-logs.jpg";
+// Image imports for Amazon Connect integration (real screenshots from PDF)
+import amazonConnectContactFlow from "@/assets/amazon-connect/amazon-connect-contact-flow.png";
+import amazonConnectLambdaConfig from "@/assets/amazon-connect/amazon-connect-lambda-config.png";
+import amazonConnectCloudwatchLogs from "@/assets/amazon-connect/amazon-connect-cloudwatch-logs.png";
 
 export const integrations: Integration[] = [
   {
