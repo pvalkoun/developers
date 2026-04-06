@@ -115,6 +115,7 @@ Deno.serve(async (req) => {
     for (const sub of subscribers) {
       const messageId = crypto.randomUUID();
       const idempotencyKey = `changelog-notify-${entry.date}-${entry.title.slice(0, 30)}-${sub.email}`;
+      const emailText = `${entry.title}\n\n${entry.description}\n\nView full changelog: ${siteUrl}/changelog`;
       const { error: enqueueError } = await supabase.rpc("enqueue_email", {
         queue_name: "transactional_emails",
         payload: {
@@ -124,8 +125,10 @@ Deno.serve(async (req) => {
           to: sub.email,
           subject,
           html: emailHtml,
+          text: emailText,
           from: "TruContact Solutions <noreply@notify.mountainaiproject.com>",
           sender_domain: "notify.mountainaiproject.com",
+          label: "changelog-notification",
         },
       });
 
