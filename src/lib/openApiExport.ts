@@ -182,32 +182,19 @@ export function generateOpenApiSpec(): Record<string, unknown> {
 }
 
 export function downloadOpenApiSpec() {
-  try {
-    const spec = generateOpenApiSpec();
-    const json = JSON.stringify(spec, null, 2);
-    const blob = new Blob([json], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    
-    // Use window.open as fallback for sandboxed iframes
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "tcs-openapi-spec.json";
-    a.style.display = "none";
-    document.body.appendChild(a);
-    a.click();
-    
-    // Cleanup after a delay to ensure download starts
-    setTimeout(() => {
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }, 100);
-  } catch (err) {
-    console.error("Failed to download OpenAPI spec:", err);
-    // Fallback: open in new tab
-    const spec = generateOpenApiSpec();
-    const json = JSON.stringify(spec, null, 2);
-    const blob = new Blob([json], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    window.open(url, "_blank");
-  }
+  const spec = generateOpenApiSpec();
+  const json = JSON.stringify(spec, null, 2);
+  
+  // Use data URI approach which works in sandboxed iframes
+  const dataUri = "data:application/json;charset=utf-8," + encodeURIComponent(json);
+  const a = document.createElement("a");
+  a.href = dataUri;
+  a.download = "tcs-openapi-spec.json";
+  a.style.display = "none";
+  document.body.appendChild(a);
+  a.click();
+  
+  setTimeout(() => {
+    document.body.removeChild(a);
+  }, 100);
 }
