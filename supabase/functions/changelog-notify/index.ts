@@ -58,11 +58,18 @@ Deno.serve(async (req) => {
   }
 
   try {
-    // Basic auth check - use a secret key to trigger notifications
+    // Auth check - accept either the dedicated notify secret or the service role key
     const authHeader = req.headers.get("authorization");
     const notifySecret = Deno.env.get("CHANGELOG_NOTIFY_SECRET");
+    const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    const token = authHeader?.replace("Bearer ", "");
     
-    if (!notifySecret || authHeader !== `Bearer ${notifySecret}`) {
+    const isAuthorized = token && (
+      (notifySecret && token === notifySecret) ||
+      (serviceRoleKey && token === serviceRoleKey)
+    );
+    
+    if (!isAuthorized) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
