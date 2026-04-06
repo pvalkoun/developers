@@ -240,6 +240,38 @@ export function DocSidebar() {
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink to="/integrations/plivo" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
+                      <Plug className="h-4 w-4 mr-2" />
+                      {!collapsed && <span>Plivo</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink to="/integrations/amazon-connect" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
+                      <Plug className="h-4 w-4 mr-2" />
+                      {!collapsed && <span>Amazon Connect</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink to="/integrations/nice-incontact" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
+                      <Plug className="h-4 w-4 mr-2" />
+                      {!collapsed && <span>NICE inContact</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink to="/integrations/ringcentral" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
+                      <Plug className="h-4 w-4 mr-2" />
+                      {!collapsed && <span>RingCentral</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
