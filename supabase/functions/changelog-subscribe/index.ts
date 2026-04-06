@@ -124,7 +124,7 @@ Deno.serve(async (req) => {
     }
 
     // Build verification email HTML
-    const verifyUrl = `https://aadfdsfjjldjf-dev-nectar-pulse.lovable.app/changelog/verify?token=${verificationToken}`;
+    const verifyUrl = `https://www.mountainaiproject.com/changelog/verify?token=${verificationToken}`;
     const emailHtml = `
 <!DOCTYPE html>
 <html lang="en">
