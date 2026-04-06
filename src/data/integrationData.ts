@@ -449,10 +449,7 @@ client.calls.create(
       },
       {
         title: "Step 5 — Connect Nodes",
-        content: "Connect the nodes in the following order:\n\n**Start** → **CCID HTTP Request (Success)** → **Initiate Call** → **Play Notification**\n\nHandle the CCID **Failed** path with fallback logic if needed (e.g., skip authentication and proceed with the call, or log an error).",
-        images: [
-          { src: plivoFlowNodes, alt: "Plivo PHLO — Connected flow nodes", caption: "The complete PHLO flow with all nodes connected" }
-        ]
+        content: "Connect the nodes in the following order:\n\n**Start** → **CCID HTTP Request (Success)** → **Initiate Call** → **Play Notification**\n\nHandle the CCID **Failed** path with fallback logic if needed (e.g., skip authentication and proceed with the call, or log an error)."
       },
       {
         title: "Step 6 — Test & Validate",
