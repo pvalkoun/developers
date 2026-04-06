@@ -188,35 +188,38 @@ export function generateOpenApiSpec(): Record<string, unknown> {
 }
 
 export function downloadOpenApiSpec() {
-  const spec = generateOpenApiSpec();
-  const json = JSON.stringify(spec, null, 2);
-  
-  // Open JSON in a new tab since downloads are blocked in sandboxed iframes
-  const blob = new Blob([json], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  
-  // Try download first
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "tcs-openapi-spec.json";
-  a.style.display = "none";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  
-  // Also copy to clipboard as fallback
-  navigator.clipboard?.writeText(json).then(() => {
-    // Optionally notify user
-  }).catch(() => {});
-  
-  // Fallback: open in new window if download doesn't trigger
-  setTimeout(() => {
-    const win = window.open("", "_blank");
-    if (win) {
-      win.document.write(`<pre style="word-wrap:break-word;white-space:pre-wrap">${json.replace(/</g, "&lt;")}</pre>`);
-      win.document.title = "tcs-openapi-spec.json";
-    }
-  }, 500);
-  
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  try {
+    const spec = generateOpenApiSpec();
+    const json = JSON.stringify(spec, null, 2);
+    
+    // Try blob download
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "tcs-openapi-spec.json";
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    
+    // Try clipboard copy as additional convenience
+    navigator.clipboard?.writeText(json).catch(() => {});
+    
+    // Fallback: open in new window
+    setTimeout(() => {
+      const win = window.open("", "_blank");
+      if (win) {
+        win.document.write(
+          `<!DOCTYPE html><html><head><title>tcs-openapi-spec.json</title></head><body><pre style="word-wrap:break-word;white-space:pre-wrap;font-size:12px">${json.replace(/&/g, "&amp;").replace(/</g, "&lt;")}</pre></body></html>`
+        );
+        win.document.close();
+      }
+    }, 300);
+    
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  } catch (e) {
+    console.error("Failed to generate OpenAPI spec:", e);
+    alert("Failed to generate OpenAPI spec. Check console for details.");
+  }
 }
