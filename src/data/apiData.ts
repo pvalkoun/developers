@@ -1256,7 +1256,7 @@ export const getEndpointById = (id: string) => {
   return apiEndpoints.find(ep => ep.id === id);
 };
 
-export const getCategories = (product?: "scp" | "bcd") => {
+export const getCategories = (product?: "scp" | "bcd" | "cno") => {
   const eps = product ? getEndpointsForProduct(product) : apiEndpoints;
   const cats: string[] = [];
   eps.forEach(ep => {
