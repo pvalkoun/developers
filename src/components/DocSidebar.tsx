@@ -30,7 +30,7 @@ export function DocSidebar() {
   const collapsed = state === "collapsed";
 
   const pathParts = location.pathname.split("/");
-  const productId = pathParts[2] as "scp" | "bcd" | undefined;
+  const productId = pathParts[2] as "scp" | "bcd" | "cno" | "pca" | undefined;
   const product = products.find(p => p.id === productId);
   const isIntegrationsSection = pathParts[3] === "integrations";
 
