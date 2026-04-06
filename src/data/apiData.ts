@@ -9,6 +9,7 @@ export interface ApiEndpoint {
   responseBody?: string;
   responseStatus?: number;
   headers?: { key: string; value: string }[];
+  errorBody?: string;
   product?: ("scp" | "bcd" | "common")[];
 }
 
