@@ -625,23 +625,18 @@ export const apiEndpoints: ApiEndpoint[] = [
   "account_id": "x59tj8rtv1",
   "image_url": "https://tcs.transunion.com/images/699f620c6ccc0121aeb7eef4.png",
   "public_image_url": "https://example.com/logo.png",
-  "service": [
+  "partner": [
     {
-      "name": "RICH-BCD",
-      "partner": [
-        {
-          "name": "att",
-          "status": "Enable-Completed"
-        },
-        {
-          "name": "tmobile",
-          "status": "Enable-Completed"
-        },
-        {
-          "name": "verizon",
-          "status": "Enable-Completed"
-        }
-      ]
+      "name": "att",
+      "status": "Enable-Completed"
+    },
+    {
+      "name": "tmobile",
+      "status": "Enable-Completed"
+    },
+    {
+      "name": "verizon",
+      "status": "Enable-Completed"
     }
   ],
   "created_by": "user_v4_api_prod",
