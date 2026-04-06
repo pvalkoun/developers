@@ -147,29 +147,53 @@ export default function Changelog() {
                 </div>
               </div>
             ) : (
-              <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3">
-                <div className="flex-1">
-                  <Label htmlFor="sub-name" className="sr-only">Name</Label>
-                  <Input
-                    id="sub-name"
-                    placeholder="Your name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    disabled={status === "loading"}
-                  />
+              <form onSubmit={handleSubscribe} className="space-y-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <Label htmlFor="sub-first-name" className="sr-only">First Name</Label>
+                    <Input
+                      id="sub-first-name"
+                      placeholder="First name"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      disabled={status === "loading"}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="sub-last-name" className="sr-only">Last Name</Label>
+                    <Input
+                      id="sub-last-name"
+                      placeholder="Last name"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      disabled={status === "loading"}
+                    />
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <Label htmlFor="sub-email" className="sr-only">Work Email</Label>
-                  <Input
-                    id="sub-email"
-                    type="email"
-                    placeholder="name@company.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    disabled={status === "loading"}
-                  />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <Label htmlFor="sub-email" className="sr-only">Work Email</Label>
+                    <Input
+                      id="sub-email"
+                      type="email"
+                      placeholder="name@company.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      disabled={status === "loading"}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="sub-company" className="sr-only">Company Name</Label>
+                    <Input
+                      id="sub-company"
+                      placeholder="Company name"
+                      value={companyName}
+                      onChange={(e) => setCompanyName(e.target.value)}
+                      disabled={status === "loading"}
+                    />
+                  </div>
                 </div>
-                <Button type="submit" disabled={status === "loading"} className="shrink-0">
+                <Button type="submit" disabled={status === "loading"} className="w-full sm:w-auto">
                   {status === "loading" ? "Subscribing..." : "Subscribe"}
                 </Button>
               </form>
