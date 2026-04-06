@@ -153,6 +153,25 @@ Deno.serve(async (req) => {
 
     const emailText = `Hi ${first_name.trim()}, thanks for subscribing to TruContact Solutions changelog updates. Please verify your email by visiting: ${verifyUrl}`;
 
+    // Get or create unsubscribe token for this email
+    let unsubscribeToken: string;
+    const { data: existingToken } = await supabase
+      .from("email_unsubscribe_tokens")
+      .select("token")
+      .eq("email", emailLower)
+      .is("used_at", null)
+      .maybeSingle();
+
+    if (existingToken) {
+      unsubscribeToken = existingToken.token;
+    } else {
+      unsubscribeToken = crypto.randomUUID();
+      await supabase.from("email_unsubscribe_tokens").insert({
+        token: unsubscribeToken,
+        email: emailLower,
+      });
+    }
+
     // Enqueue verification email
     const messageId = crypto.randomUUID();
     const idempotencyKey = `changelog-verify-${emailLower}-${verificationToken}`;
@@ -169,6 +188,7 @@ Deno.serve(async (req) => {
         from: "TruContact Solutions <noreply@notify.mountainaiproject.com>",
         sender_domain: "notify.mountainaiproject.com",
         label: "changelog-verification",
+        unsubscribe_token: unsubscribeToken,
       },
     });
 

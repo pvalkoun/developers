@@ -113,6 +113,25 @@ Deno.serve(async (req) => {
     // Enqueue email for each subscriber
     let enqueued = 0;
     for (const sub of subscribers) {
+      // Get or create unsubscribe token
+      let unsubscribeToken: string;
+      const { data: existingToken } = await supabase
+        .from("email_unsubscribe_tokens")
+        .select("token")
+        .eq("email", sub.email)
+        .is("used_at", null)
+        .maybeSingle();
+
+      if (existingToken) {
+        unsubscribeToken = existingToken.token;
+      } else {
+        unsubscribeToken = crypto.randomUUID();
+        await supabase.from("email_unsubscribe_tokens").insert({
+          token: unsubscribeToken,
+          email: sub.email,
+        });
+      }
+
       const messageId = crypto.randomUUID();
       const idempotencyKey = `changelog-notify-${entry.date}-${entry.title.slice(0, 30)}-${sub.email}`;
       const emailText = `${entry.title}\n\n${entry.description}\n\nView full changelog: ${siteUrl}/changelog`;
@@ -129,6 +148,7 @@ Deno.serve(async (req) => {
           from: "TruContact Solutions <noreply@notify.mountainaiproject.com>",
           sender_domain: "notify.mountainaiproject.com",
           label: "changelog-notification",
+          unsubscribe_token: unsubscribeToken,
         },
       });
 
