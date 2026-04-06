@@ -1,10 +1,20 @@
 import { CodeBlock } from "@/components/CodeBlock";
 import { MethodBadge } from "@/components/MethodBadge";
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-const BASE_URL_PROD = "https://api-rst.ccid.neustar.biz/ccid/analytics/v1";
-const BASE_URL_UAT = "https://api-uat-rst.ccid.neustar.biz/ccid/analytics/v1";
-const LOGIN_PROD = "https://api-rst.ccid.neustar.biz/ccid/aam/v1/login";
-const LOGIN_UAT = "https://api-uat-rst.ccid.neustar.biz/ccid/aam/v1/login";
+const loginRequest = `{
+  "userId": "{{adminUserId}}",
+  "password": "{{password}}"
+}`;
+
+const loginResponse = `{
+  "status": "success",
+  "message": "Login is successful",
+  "accessToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIs...",
+  "refreshToken": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIs..."
+}`;
 
 const singleTnResponse = `{
   "tn": "+12025551234",
@@ -130,7 +140,7 @@ function ParamTable({ title, params }: { title: string; params: ParamRow[] }) {
 }
 
 const singleTnParams: ParamRow[] = [
-  { name: "account_id", location: "path", type: "string", required: true, description: "Unique account identifier." },
+  { name: "accountId", location: "path", type: "string", required: true, description: "Unique account identifier." },
   { name: "tn", location: "query", type: "string", required: true, description: "Telephone number in E.164 format (e.g. +12025551234)." },
   { name: "service", location: "query", type: "string", required: true, description: 'Service type: "bcd" or "scp".' },
   { name: "start_time", location: "query", type: "date-time", required: true, description: "Start of analytics window. Must be 00:00:00Z (full UTC day start)." },
@@ -138,13 +148,12 @@ const singleTnParams: ParamRow[] = [
 ];
 
 const allTnsParams: ParamRow[] = [
-  { name: "account_id", location: "path", type: "string", required: true, description: "Unique account identifier." },
+  { name: "accountId", location: "path", type: "string", required: true, description: "Unique account identifier." },
   { name: "service", location: "query", type: "string", required: true, description: 'Service type: "bcd" or "scp".' },
   { name: "start_time", location: "query", type: "date-time", required: true, description: "Start of analytics window. Must be 00:00:00Z (full UTC day start)." },
   { name: "end_time", location: "query", type: "date-time", required: true, description: "End of analytics window. Must be 23:59:59Z (full UTC day end)." },
   { name: "X-Cursor", location: "header", type: "string", required: false, description: "Cursor token for pagination. Omit for first page." },
   { name: "X-Page-Size", location: "header", type: "integer", required: false, description: "Number of TN records per page. Default: 10,000. Max: 20,000." },
-  { name: "Accept-Encoding", location: "header", type: "string", required: false, description: 'Set to "gzip" to receive compressed responses.' },
 ];
 
 export default function AnalyticsPage() {
@@ -174,43 +183,33 @@ export default function AnalyticsPage() {
             The multi-TN endpoint returns paginated results. Use the <code>X-Next-Cursor</code> response header to fetch subsequent pages. Default page size is 10,000; maximum is 20,000.
           </p>
         </div>
-        <div className="rounded-lg border p-4">
-          <h3 className="font-semibold text-sm mb-1">Gzip Compression</h3>
-          <p className="text-sm text-muted-foreground">
-            The TNs (list) endpoint supports gzip-compressed responses. Include <code>Accept-Encoding: gzip</code> in your request headers.
-          </p>
-        </div>
-        <div className="rounded-lg border p-4">
-          <h3 className="font-semibold text-sm mb-1">JWT Authentication</h3>
-          <p className="text-sm text-muted-foreground">
-            All requests require a Bearer JWT token. Obtain one via the login endpoint before calling any analytics API.
-          </p>
-        </div>
       </div>
 
-      {/* Environments */}
-      <h2>Base URLs</h2>
-      <table className="w-full text-sm mb-8">
-        <thead>
-          <tr className="border-b">
-            <th className="text-left py-2 px-3 font-semibold">Environment</th>
-            <th className="text-left py-2 px-3 font-semibold">Analytics Base URL</th>
-            <th className="text-left py-2 px-3 font-semibold">Login Endpoint</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className="border-b">
-            <td className="py-2 px-3 font-medium">Production</td>
-            <td className="py-2 px-3 font-mono text-xs">{BASE_URL_PROD}</td>
-            <td className="py-2 px-3 font-mono text-xs">{LOGIN_PROD}</td>
-          </tr>
-          <tr className="border-b">
-            <td className="py-2 px-3 font-medium">UAT</td>
-            <td className="py-2 px-3 font-mono text-xs">{BASE_URL_UAT}</td>
-            <td className="py-2 px-3 font-mono text-xs">{LOGIN_UAT}</td>
-          </tr>
-        </tbody>
-      </table>
+      {/* ── Authentication ── */}
+      <div className="border-t pt-8 mt-8">
+        <div className="flex items-center gap-3 mb-3">
+          <div className="flex items-center justify-center h-9 w-9 rounded-full bg-primary text-primary-foreground font-bold text-sm shrink-0">
+            1
+          </div>
+          <h2 className="!mt-0 !mb-0">Authenticate</h2>
+        </div>
+        <p>
+          Use your credentials to authenticate with the TCS platform. The returned access token must be included in the <code>Authorization</code> header of all subsequent Analytics API requests.
+        </p>
+        <div className="mt-4 p-4 rounded-lg border bg-card">
+          <div className="flex items-center gap-3 mb-3">
+            <MethodBadge method="POST" />
+            <code className="text-sm font-mono">/ccid/aam/v1/login</code>
+          </div>
+          <CodeBlock code={loginRequest} title="Request Body" language="json" />
+          <CodeBlock code={loginResponse} title="Response — 200" language="json" />
+          <Button asChild variant="link" size="sm" className="mt-2 px-0">
+            <Link to="/products/bcd/api/auth-token">
+              View full API reference <ArrowRight className="ml-1 h-3 w-3" />
+            </Link>
+          </Button>
+        </div>
+      </div>
 
       {/* ── Endpoint 1: Single TN ── */}
       <div className="border-t pt-8 mt-8">
@@ -220,7 +219,7 @@ export default function AnalyticsPage() {
         </div>
         <div className="mb-4 p-3 rounded-lg bg-muted font-mono text-sm">
           <span className="font-bold mr-2">GET</span>
-          /accounts/{"{account_id}"}/tn
+          /ccid/analytics/v1/admin/account/{"{accountId}"}/tn
         </div>
         <p>
           Returns analytics metrics for a single telephone number. Use the <code>service</code> parameter to select BCD or SCP metrics. For BCD, the response includes per-campaign answer rates and average call durations broken down by carrier. For SCP, it returns signing counts and authentication/block statistics per carrier.
@@ -240,10 +239,10 @@ export default function AnalyticsPage() {
         </div>
         <div className="mb-4 p-3 rounded-lg bg-muted font-mono text-sm">
           <span className="font-bold mr-2">GET</span>
-          /accounts/{"{account_id}"}/tns
+          /ccid/analytics/v1/admin/account/{"{accountId}"}/tns
         </div>
         <p>
-          Returns a cursor-paginated list of TN analytics for an entire account. Supports gzip compression for large result sets. Pagination headers (<code>X-Next-Cursor</code>, <code>X-Total-Count</code>) are included in the response.
+          Returns a cursor-paginated list of TN analytics for an entire account. Pagination headers (<code>X-Next-Cursor</code>, <code>X-Total-Count</code>) are included in the response.
         </p>
 
         <ParamTable title="Parameters" params={allTnsParams} />
@@ -264,10 +263,6 @@ export default function AnalyticsPage() {
             <tr className="border-b">
               <td className="py-2 px-3 font-mono text-xs">X-Total-Count</td>
               <td className="py-2 px-3 text-muted-foreground">Total number of matching TN records.</td>
-            </tr>
-            <tr className="border-b">
-              <td className="py-2 px-3 font-mono text-xs">Content-Encoding</td>
-              <td className="py-2 px-3 text-muted-foreground">Set to "gzip" when compression is applied.</td>
             </tr>
           </tbody>
         </table>
