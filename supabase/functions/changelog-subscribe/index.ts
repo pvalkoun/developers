@@ -18,10 +18,24 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { name, email } = await req.json();
+    const { first_name, last_name, email, company_name } = await req.json();
 
-    if (!name || typeof name !== "string" || name.trim().length < 2) {
-      return new Response(JSON.stringify({ error: "Name is required (min 2 characters)" }), {
+    if (!first_name || typeof first_name !== "string" || first_name.trim().length < 2) {
+      return new Response(JSON.stringify({ error: "First name is required (min 2 characters)" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (!last_name || typeof last_name !== "string" || last_name.trim().length < 2) {
+      return new Response(JSON.stringify({ error: "Last name is required (min 2 characters)" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (!company_name || typeof company_name !== "string" || company_name.trim().length < 2) {
+      return new Response(JSON.stringify({ error: "Company name is required" }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
@@ -77,7 +91,13 @@ Deno.serve(async (req) => {
       const newToken = crypto.randomUUID();
       await supabase
         .from("changelog_subscribers")
-        .update({ name: name.trim(), verification_token: newToken, updated_at: new Date().toISOString() })
+        .update({
+          first_name: first_name.trim(),
+          last_name: last_name.trim(),
+          company_name: company_name.trim(),
+          verification_token: newToken,
+          updated_at: new Date().toISOString(),
+        })
         .eq("id", existing.id);
       verificationToken = newToken;
     } else {
@@ -85,7 +105,13 @@ Deno.serve(async (req) => {
       const newToken = crypto.randomUUID();
       const { error: insertError } = await supabase
         .from("changelog_subscribers")
-        .insert({ name: name.trim(), email: emailLower, verification_token: newToken });
+        .insert({
+          first_name: first_name.trim(),
+          last_name: last_name.trim(),
+          email: emailLower,
+          company_name: company_name.trim(),
+          verification_token: newToken,
+        });
 
       if (insertError) {
         console.error("Insert error:", insertError);
@@ -111,7 +137,7 @@ Deno.serve(async (req) => {
       </div>
       <h2 style="font-size:20px;color:#1e293b;margin:8px 0 12px;">Verify your email</h2>
       <p style="font-size:14px;color:#475569;line-height:1.6;margin:0 0 20px;">
-        Hi ${name.trim()}, thanks for subscribing to TruContact Solutions changelog updates.
+        Hi ${first_name.trim()}, thanks for subscribing to TruContact Solutions changelog updates.
         Please verify your email to start receiving notifications about new API changes, features, and updates.
       </p>
       <a href="${verifyUrl}" style="display:inline-block;background:#0066cc;color:#ffffff;padding:12px 24px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:600;">
@@ -125,7 +151,7 @@ Deno.serve(async (req) => {
 </body>
 </html>`;
 
-    const emailText = `Hi ${name.trim()}, thanks for subscribing to TruContact Solutions changelog updates. Please verify your email by visiting: ${verifyUrl}`;
+    const emailText = `Hi ${first_name.trim()}, thanks for subscribing to TruContact Solutions changelog updates. Please verify your email by visiting: ${verifyUrl}`;
 
     // Enqueue verification email
     const messageId = crypto.randomUUID();
