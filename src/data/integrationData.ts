@@ -367,7 +367,7 @@ client.calls.create(
       },
       {
         title: "Test Checklist",
-        content: "- ☐ Integration is **Active**\n- ☐ Action is **Published**\n- ☐ Test execution returns success status\n- ☐ API key is valid and correctly configured\n- ☐ Phone numbers are in correct format (10 digits, no country code)\n\n| Field | Sample Value | Notes |\n|-------|-------------|-------|\n| fromNumber | 7033886651 | 10-digit format, no +1 |\n| toNumber | 5035166763 | 10-digit format, no +1 |"
+        content: "- Integration is **Active**\n- Action is **Published**\n- Test execution returns success status\n- API key is valid and correctly configured\n- Phone numbers are in correct format (10 digits, no country code)\n\n| Field | Sample Value | Notes |\n|-------|-------------|-------|\n| fromNumber | 7033886651 | 10-digit format, no +1 |\n| toNumber | 5035166763 | 10-digit format, no +1 |"
       },
       {
         title: "Step 4 — Create Call Rule",
@@ -408,7 +408,7 @@ client.calls.create(
       },
       {
         title: "Best Practices",
-        content: "**Security:**\n- ✓ Always enable HIPAA/Secure Data in production\n- ✓ Protect API keys — do not share or expose in logs\n- ✓ Regularly rotate API keys per TransUnion's recommendations\n\n**Performance:**\n- ✓ Set appropriate timeout values (60 seconds recommended)\n- ✓ Implement error handling in call flows\n- ✓ Monitor data action execution times and success rates\n\n**Campaign Configuration:**\n- ✓ Test rules with a small contact list before full deployment\n- ✓ Monitor campaign performance after enabling CCID authentication\n- ✓ Use pre-call rules to ensure authentication happens before dialing\n- ✓ Verify contact list phone numbers are in correct format (10 digits)\n- ✓ Review campaign analytics to measure impact on answer rates"
+        content: "**Security:**\n- Always enable HIPAA/Secure Data in production\n- Protect API keys — do not share or expose in logs\n- Regularly rotate API keys per TransUnion's recommendations\n\n**Performance:**\n- Set appropriate timeout values (60 seconds recommended)\n- Implement error handling in call flows\n- Monitor data action execution times and success rates\n\n**Campaign Configuration:**\n- Test rules with a small contact list before full deployment\n- Monitor campaign performance after enabling CCID authentication\n- Use pre-call rules to ensure authentication happens before dialing\n- Verify contact list phone numbers are in correct format (10 digits)\n- Review campaign analytics to measure impact on answer rates"
       }
     ]
   },
@@ -766,18 +766,18 @@ npm install --production`,
         content: "Before deploying, validate your configuration and test connections:",
         code: `# Validate configuration
 npm run validate-config
-# Expected: ✔ Configuration is valid!
+# Expected: Configuration is valid!
 
 # Test connections
 npm run test-connection
-# Expected: ✔ RingCentral connection successful
-#           ✔ CCID API connection successful
+# Expected: RingCentral connection successful
+#           CCID API connection successful
 
 # Test latency
 npm run test-latency
-# Expected: ✔ WebSocket latency: 75ms
-#           ✔ STIR/SHAKEN API latency: 52ms
-#           ✔ Total end-to-end latency: 127ms`,
+# Expected: WebSocket latency: 75ms
+#           STIR/SHAKEN API latency: 52ms
+#           Total end-to-end latency: 127ms`,
         language: "bash"
       },
       {
@@ -817,15 +817,15 @@ sudo systemctl status ringcentral-stirshaken`,
         content: "1. Make an outbound call from your RingCentral account\n2. Monitor logs in real-time: `tail -f /var/log/ringcentral-stirshaken.log`\n3. Verify the STIR/SHAKEN token is deposited\n\n**Expected Log Output:**",
         code: `🕔 Outbound call detected
 {"sessionId":"s-abc123...","from":"+14434718305","to":"+17084131327","status":"Setup","latency":"75ms"}
-✔ STIR/SHAKEN token signed
+STIR/SHAKEN token signed
 {"origNumber":"4434718305","destNumber":"7084131327","statusCode":200,"responseTime":"52ms"}
-✔ STIR/SHAKEN token signed successfully
+STIR/SHAKEN token signed successfully
 {"sessionId":"s-abc123...","totalLatency":"127ms"}`,
         language: "text"
       },
       {
         title: "Verify on Recipient Phone",
-        content: "The recipient should see:\n\n- ✔ \"Verified\" badge or checkmark\n- ✔ Your business name (if BCD is configured)\n- ✔ No spam warning"
+        content: "The recipient should see:\n\n- \"Verified\" badge or checkmark\n- Your business name (if BCD is configured)\n- No spam warning"
       },
       {
         title: "Management Commands",
@@ -837,7 +837,7 @@ sudo systemctl status ringcentral-stirshaken`,
       },
       {
         title: "Security Best Practices",
-        content: "**Credential Management:**\n- ✔ Never commit `config/config.json` to version control\n- ✔ Use environment variables for sensitive data in production\n- ✔ Rotate credentials regularly (every 90 days recommended)\n- ✔ Restrict file permissions: `chmod 600 config/config.json`\n- ✔ Use AWS Secrets Manager for enterprise deployments\n\n**Network Security:**\n- ✔ Restrict SSH access to specific IP addresses\n- ✔ Use VPC for additional network isolation\n- ✔ Enable CloudWatch for monitoring and alerts\n- ✔ Keep software updated: `sudo yum update -y`"
+        content: "**Credential Management:**\n- Never commit `config/config.json` to version control\n- Use environment variables for sensitive data in production\n- Rotate credentials regularly (every 90 days recommended)\n- Restrict file permissions: `chmod 600 config/config.json`\n- Use AWS Secrets Manager for enterprise deployments\n\n**Network Security:**\n- Restrict SSH access to specific IP addresses\n- Use VPC for additional network isolation\n- Enable CloudWatch for monitoring and alerts\n- Keep software updated: `sudo yum update -y`"
       },
       {
         title: "Architecture Overview",
@@ -845,7 +845,7 @@ sudo systemctl status ringcentral-stirshaken`,
       },
       {
         title: "Support & Resources",
-        content: "| Type | Contact |\n|------|--------|\n| **Technical Support** | PDLTCSProductOps@transunion.com |\n| **API Key Requests** | Your TransUnion account manager |\n| **General Inquiries** | PDLTCSProductOps@transunion.com |\n\n**Success Checklist:**\n- ✔ SDK service is running: `sudo systemctl status ringcentral-stirshaken` shows \"active (running)\"\n- ✔ Logs show successful initialization with no errors\n- ✔ Test calls trigger STIR/SHAKEN token deposits in logs\n- ✔ Total latency is under 200ms\n- ✔ Recipient phones display \"Verified\" badge\n- ✔ Success rate is above 99%\n- ✔ Service auto-restarts after reboot"
+        content: "| Type | Contact |\n|------|--------|\n| **Technical Support** | PDLTCSProductOps@transunion.com |\n| **API Key Requests** | Your TransUnion account manager |\n| **General Inquiries** | PDLTCSProductOps@transunion.com |\n\n**Success Checklist:**\n- SDK service is running: `sudo systemctl status ringcentral-stirshaken` shows \"active (running)\"\n- Logs show successful initialization with no errors\n- Test calls trigger STIR/SHAKEN token deposits in logs\n- Total latency is under 200ms\n- Recipient phones display \"Verified\" badge\n- Success rate is above 99%\n- Service auto-restarts after reboot"
       }
     ]
   }
