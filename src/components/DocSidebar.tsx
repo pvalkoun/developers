@@ -121,29 +121,41 @@ export function DocSidebar() {
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-          <SidebarGroup>
-            <SidebarGroupLabel>Integrations</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <NavLink to="/integrations/twilio" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
-                      <Plug className="h-4 w-4 mr-2" />
-                      {!collapsed && <span>Twilio</span>}
-                    </NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <NavLink to="/integrations/genesys" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
-                      <Plug className="h-4 w-4 mr-2" />
-                      {!collapsed && <span>Genesys Cloud CX</span>}
-                    </NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                <Collapsible>
+                  <SidebarMenuItem>
+                    <CollapsibleTrigger asChild>
+                      <SidebarMenuButton className="cursor-pointer">
+                        <Plug className="h-4 w-4 mr-2" />
+                        {!collapsed && (
+                          <>
+                            <span className="flex-1">Integrations</span>
+                            <ChevronRight className="h-3 w-3 transition-transform [[data-state=open]_&]:rotate-90" />
+                          </>
+                        )}
+                      </SidebarMenuButton>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      <SidebarMenu className="ml-4 border-l border-sidebar-border pl-2 mt-1">
+                        <SidebarMenuItem>
+                          <SidebarMenuButton asChild>
+                            <NavLink to="/integrations/twilio" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium" className="text-xs">
+                              <Plug className="h-3.5 w-3.5 mr-2" />
+                              {!collapsed && <span>Twilio</span>}
+                            </NavLink>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                        <SidebarMenuItem>
+                          <SidebarMenuButton asChild>
+                            <NavLink to="/integrations/genesys" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium" className="text-xs">
+                              <Plug className="h-3.5 w-3.5 mr-2" />
+                              {!collapsed && <span>Genesys Cloud CX</span>}
+                            </NavLink>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      </SidebarMenu>
+                    </CollapsibleContent>
+                  </SidebarMenuItem>
+                </Collapsible>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
