@@ -108,19 +108,45 @@ Deno.serve(async (req) => {
     }
 
     const emailHtml = buildEmailHtml(entry, siteUrl);
+    const subject = `TruContact Update: ${entry.title}`;
     
-    // Log notification (actual email sending would require an email service)
-    console.log(`Would send changelog update "${entry.title}" to ${subscribers.length} subscribers`);
+    // Enqueue email for each subscriber
+    let enqueued = 0;
     for (const sub of subscribers) {
-      console.log(`  → ${sub.email} (${sub.name})`);
+      const messageId = crypto.randomUUID();
+      const { error: enqueueError } = await supabase.rpc("enqueue_email", {
+        queue_name: "transactional_emails",
+        payload: {
+          message_id: messageId,
+          to: sub.email,
+          subject,
+          html: emailHtml,
+          from: "TruContact Solutions <noreply@notify.mountainaiproject.com>",
+          sender_domain: "notify.mountainaiproject.com",
+        },
+      });
+
+      if (enqueueError) {
+        console.error(`Failed to enqueue email for ${sub.email}:`, enqueueError);
+        continue;
+      }
+
+      await supabase.from("email_send_log").insert({
+        message_id: messageId,
+        recipient: sub.email,
+        subject,
+        template_name: "changelog-notification",
+        status: "pending",
+      });
+
+      enqueued++;
     }
 
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: `Notification queued for ${subscribers.length} subscriber(s)`,
-        sent: subscribers.length,
-        _preview_html: emailHtml,
+        message: `Notification queued for ${enqueued} subscriber(s)`,
+        sent: enqueued,
       }),
       {
         status: 200,
