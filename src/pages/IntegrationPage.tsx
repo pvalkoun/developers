@@ -84,11 +84,11 @@ function renderTable(content: string) {
   return (
     <table>
       <thead>
-        <tr>{headers.map((h, i) => <th key={i}>{h}</th>)}</tr>
+        <tr>{headers.map((h, i) => <th key={i}>{formatInlineMarkdown(h)}</th>)}</tr>
       </thead>
       <tbody>
         {rows.map((row, i) => (
-          <tr key={i}>{row.map((cell, j) => <td key={j}>{cell}</td>)}</tr>
+          <tr key={i}>{row.map((cell, j) => <td key={j}>{formatInlineMarkdown(cell)}</td>)}</tr>
         ))}
       </tbody>
     </table>
