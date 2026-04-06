@@ -69,13 +69,12 @@ Deno.serve(async (req) => {
       (token && serviceRoleKey && token === serviceRoleKey)
     );
     
-    // TODO: Re-enable auth check after testing
-    // if (!isAuthorized) {
-    //   return new Response(JSON.stringify({ error: "Unauthorized" }), {
-    //     status: 401,
-    //     headers: { ...corsHeaders, "Content-Type": "application/json" },
-    //   });
-    // }
+    if (!isAuthorized) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
 
     const { entry, siteUrl = "https://www.mountainaiproject.com" } = await req.json() as { 
       entry: ChangelogEntry; 
