@@ -97,16 +97,71 @@ Deno.serve(async (req) => {
       verificationToken = newToken;
     }
 
-    // Send verification email via the verify endpoint (which will handle email sending)
-    // For now, log the token - email sending will be added with a proper email service
-    console.log(`Verification token for ${emailLower}: ${verificationToken}`);
+    // Build verification email HTML
+    const verifyUrl = `https://aadfdsfjjldjf-dev-nectar-pulse.lovable.app/changelog/verify?token=${verificationToken}`;
+    const emailHtml = `
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head>
+<body style="margin:0;padding:0;background:#f8fafc;font-family:Arial,Helvetica,sans-serif;">
+  <div style="max-width:600px;margin:0 auto;padding:24px;">
+    <div style="background:#ffffff;border-radius:8px;border-left:4px solid #0066cc;padding:32px;margin-top:16px;">
+      <div style="margin-bottom:16px;">
+        <span style="font-size:18px;font-weight:bold;color:#1e293b;">TruContact Solutions</span>
+      </div>
+      <h2 style="font-size:20px;color:#1e293b;margin:8px 0 12px;">Verify your email</h2>
+      <p style="font-size:14px;color:#475569;line-height:1.6;margin:0 0 20px;">
+        Hi ${name.trim()}, thanks for subscribing to TruContact Solutions changelog updates.
+        Please verify your email to start receiving notifications about new API changes, features, and updates.
+      </p>
+      <a href="${verifyUrl}" style="display:inline-block;background:#0066cc;color:#ffffff;padding:12px 24px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:600;">
+        Verify Email
+      </a>
+      <p style="font-size:12px;color:#94a3b8;margin:24px 0 0;">
+        If you didn't request this, you can safely ignore this email.
+      </p>
+    </div>
+  </div>
+</body>
+</html>`;
+
+    const emailText = `Hi ${name.trim()}, thanks for subscribing to TruContact Solutions changelog updates. Please verify your email by visiting: ${verifyUrl}`;
+
+    // Enqueue verification email
+    const messageId = crypto.randomUUID();
+    const idempotencyKey = `changelog-verify-${emailLower}-${verificationToken}`;
+    const { error: enqueueError } = await supabase.rpc("enqueue_email", {
+      queue_name: "transactional_emails",
+      payload: {
+        message_id: messageId,
+        idempotency_key: idempotencyKey,
+        purpose: "transactional",
+        to: emailLower,
+        subject: "Verify your TruContact Solutions changelog subscription",
+        html: emailHtml,
+        text: emailText,
+        from: "TruContact Solutions <noreply@notify.mountainaiproject.com>",
+        sender_domain: "notify.mountainaiproject.com",
+        label: "changelog-verification",
+      },
+    });
+
+    if (enqueueError) {
+      console.error("Failed to enqueue verification email:", enqueueError);
+    }
+
+    // Log to email_send_log
+    await supabase.from("email_send_log").insert({
+      message_id: messageId,
+      recipient_email: emailLower,
+      template_name: "changelog-verification",
+      status: "pending",
+    });
 
     return new Response(
       JSON.stringify({ 
         success: true, 
         message: "Please check your email to verify your subscription.",
-        // Include token in dev for testing - remove in production
-        _dev_token: verificationToken,
       }),
       {
         status: 200,

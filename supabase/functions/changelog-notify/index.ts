@@ -108,19 +108,50 @@ Deno.serve(async (req) => {
     }
 
     const emailHtml = buildEmailHtml(entry, siteUrl);
+    const subject = `TruContact Update: ${entry.title}`;
     
-    // Log notification (actual email sending would require an email service)
-    console.log(`Would send changelog update "${entry.title}" to ${subscribers.length} subscribers`);
+    // Enqueue email for each subscriber
+    let enqueued = 0;
     for (const sub of subscribers) {
-      console.log(`  → ${sub.email} (${sub.name})`);
+      const messageId = crypto.randomUUID();
+      const idempotencyKey = `changelog-notify-${entry.date}-${entry.title.slice(0, 30)}-${sub.email}`;
+      const emailText = `${entry.title}\n\n${entry.description}\n\nView full changelog: ${siteUrl}/changelog`;
+      const { error: enqueueError } = await supabase.rpc("enqueue_email", {
+        queue_name: "transactional_emails",
+        payload: {
+          message_id: messageId,
+          idempotency_key: idempotencyKey,
+          purpose: "transactional",
+          to: sub.email,
+          subject,
+          html: emailHtml,
+          text: emailText,
+          from: "TruContact Solutions <noreply@notify.mountainaiproject.com>",
+          sender_domain: "notify.mountainaiproject.com",
+          label: "changelog-notification",
+        },
+      });
+
+      if (enqueueError) {
+        console.error(`Failed to enqueue email for ${sub.email}:`, enqueueError);
+        continue;
+      }
+
+      await supabase.from("email_send_log").insert({
+        message_id: messageId,
+        recipient_email: sub.email,
+        template_name: "changelog-notification",
+        status: "pending",
+      });
+
+      enqueued++;
     }
 
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: `Notification queued for ${subscribers.length} subscriber(s)`,
-        sent: subscribers.length,
-        _preview_html: emailHtml,
+        message: `Notification queued for ${enqueued} subscriber(s)`,
+        sent: enqueued,
       }),
       {
         status: 200,
