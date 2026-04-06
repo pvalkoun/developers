@@ -572,23 +572,18 @@ export const apiEndpoints: ApiEndpoint[] = [
     headers: [{ key: "Content-Type", value: "application/json" }, { key: "Accept", value: "application/json" }],
     requestBody: `{
   "public_image_url": "https://example.com/logo.png",
-  "service": [
+  "partner": [
     {
-      "name": "RICH-BCD",
-      "partner": [
-        {
-          "name": "att",
-          "status": "TU-Review-Requested"
-        },
-        {
-          "name": "tmobile",
-          "status": "TU-Review-Requested"
-        },
-        {
-          "name": "verizon",
-          "status": "TU-Review-Requested"
-        }
-      ]
+      "name": "att",
+      "status": "TU-Review-Requested"
+    },
+    {
+      "name": "tmobile",
+      "status": "TU-Review-Requested"
+    },
+    {
+      "name": "verizon",
+      "status": "TU-Review-Requested"
     }
   ]
 }`,
@@ -597,23 +592,18 @@ export const apiEndpoints: ApiEndpoint[] = [
   "account_id": "x59tj8rtv1",
   "image_url": "https://tcs.transunion.com/images/699f620c6ccc0121aeb7eef4.png",
   "public_image_url": "https://example.com/logo.png",
-  "service": [
+  "partner": [
     {
-      "name": "RICH-BCD",
-      "partner": [
-        {
-          "name": "att",
-          "status": "TU-Review-Requested"
-        },
-        {
-          "name": "tmobile",
-          "status": "TU-Review-Requested"
-        },
-        {
-          "name": "verizon",
-          "status": "TU-Review-Requested"
-        }
-      ]
+      "name": "att",
+      "status": "TU-Review-Requested"
+    },
+    {
+      "name": "tmobile",
+      "status": "TU-Review-Requested"
+    },
+    {
+      "name": "verizon",
+      "status": "TU-Review-Requested"
     }
   ],
   "created_by": "user_v4_api_prod",
