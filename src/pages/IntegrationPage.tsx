@@ -33,6 +33,27 @@ export default function IntegrationPage() {
           {section.code && (
             <CodeBlock code={section.code} language={section.language || "text"} title={section.language?.toUpperCase() || "Code"} />
           )}
+
+          {/* Render images */}
+          {section.images && section.images.length > 0 && (
+            <div className="my-6 space-y-4">
+              {section.images.map((image, imgIdx) => (
+                <figure key={imgIdx} className="rounded-lg border border-border overflow-hidden">
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    className="w-full"
+                    loading="lazy"
+                  />
+                  {image.caption && (
+                    <figcaption className="px-4 py-2 text-sm text-muted-foreground bg-muted/50 border-t border-border">
+                      {image.caption}
+                    </figcaption>
+                  )}
+                </figure>
+              ))}
+            </div>
+          )}
         </div>
       ))}
     </div>
