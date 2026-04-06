@@ -114,10 +114,13 @@ Deno.serve(async (req) => {
     let enqueued = 0;
     for (const sub of subscribers) {
       const messageId = crypto.randomUUID();
+      const idempotencyKey = `changelog-notify-${entry.date}-${entry.title.slice(0, 30)}-${sub.email}`;
       const { error: enqueueError } = await supabase.rpc("enqueue_email", {
         queue_name: "transactional_emails",
         payload: {
           message_id: messageId,
+          idempotency_key: idempotencyKey,
+          purpose: "transactional",
           to: sub.email,
           subject,
           html: emailHtml,
@@ -133,8 +136,7 @@ Deno.serve(async (req) => {
 
       await supabase.from("email_send_log").insert({
         message_id: messageId,
-        recipient: sub.email,
-        subject,
+        recipient_email: sub.email,
         template_name: "changelog-notification",
         status: "pending",
       });
