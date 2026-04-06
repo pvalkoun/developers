@@ -25,7 +25,7 @@ const Index = () => {
               <CardTitle className="text-xl">Pre-Call Authentication</CardTitle>
             </div>
             <CardDescription className="text-sm leading-relaxed">
-              Verify caller identity in real-time using STIR/SHAKEN. Required prerequisite for all TruContact products.
+              Verify Caller Identity in real-time before Branding calls or to stop spoofed calls. This is prerequisite for both Branded Call Display and Spoofed Call Protection.
             </CardDescription>
           </CardHeader>
           <CardContent className="mt-auto">
