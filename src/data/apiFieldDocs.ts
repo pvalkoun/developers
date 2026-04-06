@@ -226,7 +226,7 @@ export const endpointFieldDocs: Record<string, EndpointFieldDocs> = {
       { path: "accountId", type: "String", required: true, description: "Unique identifier of the account", constraints: "Length between 4 and 10" },
     ],
     requestFields: [
-      { path: "public_image_url", type: "String", required: true, description: "Publicly accessible URL of the image to use as the brand logo", constraints: "Must be a valid HTTPS URL pointing to a PNG or JPEG image" },
+      { path: "public_image_url", type: "String", required: true, description: "Publicly accessible URL of the image to use as the brand logo", constraints: "Must be a valid HTTPS URL; image must be 256×256 px, BMP format, < 200 KB" },
       { path: "partner[]", type: "Array", required: true, description: "Carrier partner configurations" },
       { path: "partner[].name", type: "String", required: true, description: "Carrier partner name", constraints: "att, verizon, or tmobile" },
       { path: "partner[].status", type: "String", required: true, description: "Initial review status", constraints: "Use TU-Review-Requested to submit for TransUnion review" },
