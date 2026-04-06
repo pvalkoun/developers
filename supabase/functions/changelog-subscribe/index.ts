@@ -125,6 +125,8 @@ Deno.serve(async (req) => {
 </body>
 </html>`;
 
+    const emailText = `Hi ${name.trim()}, thanks for subscribing to TruContact Solutions changelog updates. Please verify your email by visiting: ${verifyUrl}`;
+
     // Enqueue verification email
     const messageId = crypto.randomUUID();
     const idempotencyKey = `changelog-verify-${emailLower}-${verificationToken}`;
@@ -137,8 +139,10 @@ Deno.serve(async (req) => {
         to: emailLower,
         subject: "Verify your TruContact Solutions changelog subscription",
         html: emailHtml,
+        text: emailText,
         from: "TruContact Solutions <noreply@notify.mountainaiproject.com>",
         sender_domain: "notify.mountainaiproject.com",
+        label: "changelog-verification",
       },
     });
 
