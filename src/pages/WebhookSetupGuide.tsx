@@ -3,7 +3,7 @@ import { CodeBlock } from "@/components/CodeBlock";
 import { MethodBadge } from "@/components/MethodBadge";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { webhookEndpoints, sampleEventPayloads, getWebhookEndpoint } from "@/data/webhookData";
+import { sampleEventPayloads, getWebhookEndpoint } from "@/data/webhookData";
 
 const setupSteps = [
   {
