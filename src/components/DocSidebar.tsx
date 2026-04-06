@@ -14,10 +14,10 @@ import {
   SidebarHeader,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Home, Shield, Palette, BookOpen, Code2, Plug, ChevronLeft, ChevronDown, ChevronRight, Download, ClipboardList, Phone, Tag, BarChart3, FolderOpen } from "lucide-react";
+import { Home, Shield, Palette, BookOpen, Code2, Plug, ChevronLeft, ChevronDown, ChevronRight, Download, ClipboardList, Phone, Tag, BarChart3, Bell } from "lucide-react";
 import { products } from "@/data/productData";
 import { getEndpointsForProduct, getCategories } from "@/data/apiData";
-import { getIntegrationsForProduct } from "@/data/integrationData";
+import { webhookEndpoints, webhookCategories } from "@/data/webhookData";
 import { MethodBadge } from "@/components/MethodBadge";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -33,6 +33,61 @@ export function DocSidebar() {
   const productId = pathParts[2] as "scp" | "bcd" | "cno" | undefined;
   const product = products.find(p => p.id === productId);
   const isIntegrationsSection = pathParts[3] === "integrations";
+  const isWebhookSection = location.pathname.startsWith("/resources/webhooks");
+
+  // Webhook section sidebar
+  if (isWebhookSection) {
+    return (
+      <Sidebar collapsible="icon">
+        <SidebarHeader className="p-4 border-b border-sidebar-border">
+          {!collapsed && (
+            <div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => navigate("/")}
+                className="mb-2 -ml-2 text-sidebar-foreground hover:text-sidebar-primary text-xs"
+              >
+                <ChevronLeft className="h-3 w-3 mr-1" />
+                All Products
+              </Button>
+              <div className="flex items-center gap-2">
+                <Bell className="h-5 w-5 text-sidebar-primary" />
+                <span className="font-bold text-sidebar-foreground">Webhooks</span>
+              </div>
+            </div>
+          )}
+        </SidebarHeader>
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupLabel>Overview</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink to="/resources/webhooks" end activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
+                      <BookOpen className="h-4 w-4 mr-2" />
+                      {!collapsed && <span>Introduction</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink to="/resources/webhooks/guide" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
+                      <BookOpen className="h-4 w-4 mr-2" />
+                      {!collapsed && <span>Setup Guide</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+
+          <WebhookApiAccordion collapsed={collapsed} currentPath={location.pathname} />
+        </SidebarContent>
+      </Sidebar>
+    );
+  }
 
   // Home-level sidebar
   if (!product && !isIntegrationsSection) {
@@ -188,6 +243,14 @@ export function DocSidebar() {
                     </CollapsibleContent>
                   </SidebarMenuItem>
                 </Collapsible>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink to="/resources/webhooks" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
+                      <Bell className="h-4 w-4 mr-2" />
+                      {!collapsed && <span>Webhooks</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
@@ -417,6 +480,79 @@ function ApiCategoryAccordion({
                     <SidebarMenuButton asChild>
                       <NavLink
                         to={`/products/${productId}/api/${ep.id}`}
+                        activeClassName="bg-sidebar-accent text-sidebar-primary font-medium"
+                        className="flex items-center gap-2 pl-6"
+                      >
+                        <MethodBadge method={ep.method} />
+                        <span className="text-xs truncate">{ep.name}</span>
+                      </NavLink>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </div>
+            );
+          })}
+        </SidebarMenu>
+      </SidebarGroupContent>
+    </SidebarGroup>
+  );
+}
+
+function WebhookApiAccordion({
+  collapsed,
+  currentPath,
+}: {
+  collapsed: boolean;
+  currentPath: string;
+}) {
+  const activeCategory = webhookCategories.find(cat =>
+    webhookEndpoints.filter(ep => ep.category === cat).some(ep => currentPath.includes(ep.id))
+  );
+  const [openCategory, setOpenCategory] = useState<string | null>(activeCategory || null);
+
+  const handleToggle = (cat: string) => {
+    setOpenCategory(prev => (prev === cat ? null : cat));
+  };
+
+  return (
+    <SidebarGroup>
+      <SidebarGroupLabel>API Reference</SidebarGroupLabel>
+      <SidebarGroupContent>
+        <SidebarMenu>
+          {webhookCategories.map(cat => {
+            const catEndpoints = webhookEndpoints.filter(ep => ep.category === cat);
+            const isOpen = openCategory === cat;
+
+            if (collapsed) {
+              return catEndpoints.map(ep => (
+                <SidebarMenuItem key={ep.id}>
+                  <SidebarMenuButton asChild>
+                    <NavLink
+                      to={`/resources/webhooks/api/${ep.id}`}
+                      activeClassName="bg-sidebar-accent text-sidebar-primary font-medium"
+                      className="flex items-center gap-2 pl-6"
+                    >
+                      <Code2 className="h-4 w-4" />
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ));
+            }
+
+            return (
+              <div key={cat}>
+                <button
+                  onClick={() => handleToggle(cat)}
+                  className="flex w-full items-center justify-between px-3 py-1.5 text-[10px] uppercase tracking-wider text-sidebar-foreground/50 font-semibold mt-2 hover:text-sidebar-foreground/80 cursor-pointer"
+                >
+                  <span>{cat}</span>
+                  {isOpen ? <ChevronDown className="h-3 w-3" /> : <ChevronRight className="h-3 w-3" />}
+                </button>
+                {isOpen && catEndpoints.map(ep => (
+                  <SidebarMenuItem key={ep.id}>
+                    <SidebarMenuButton asChild>
+                      <NavLink
+                        to={`/resources/webhooks/api/${ep.id}`}
                         activeClassName="bg-sidebar-accent text-sidebar-primary font-medium"
                         className="flex items-center gap-2 pl-6"
                       >
