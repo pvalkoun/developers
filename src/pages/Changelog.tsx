@@ -13,6 +13,16 @@ interface ChangelogEntry {
 const changelog: ChangelogEntry[] = [
   {
     date: "2026-04-06",
+    title: "Analytics API Documentation",
+    description:
+      "Added Analytics API reference under a new Resources section. The Analytics API provides per-TN and account-wide call performance metrics for BCD and SCP services, including answer rates, call durations, signing volumes, and per-carrier breakdowns. Supports cursor-based pagination and gzip compression.",
+    tags: ["Analytics", "New Feature", "API"],
+    links: [
+      { label: "Analytics API", to: "/resources/analytics" },
+    ],
+  },
+  {
+    date: "2026-04-06",
     title: "Image Profile API for Branded Call Display",
     description:
       "Added new Image Profile endpoints (POST, GET, DELETE) to the BCD configuration flow. Image profiles allow you to upload a public image URL and receive an internal TransUnion-hosted image URL. The returned image_profile_id is used when creating Rich BCD caller profiles to display your company logo on recipient devices.",

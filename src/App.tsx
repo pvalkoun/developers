@@ -12,6 +12,7 @@ import ApiEndpointPage from "./pages/ApiEndpointPage";
 import IntegrationPage from "./pages/IntegrationPage";
 import Changelog from "./pages/Changelog";
 import PreCallAuth from "./pages/PreCallAuth";
+import AnalyticsPage from "./pages/AnalyticsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="/products/:productId/api/:endpointId" element={<ApiEndpointPage />} />
             <Route path="/integrations/:integrationId" element={<IntegrationPage />} />
             <Route path="/pre-call-auth" element={<PreCallAuth />} />
+            <Route path="/resources/analytics" element={<AnalyticsPage />} />
             <Route path="/changelog" element={<Changelog />} />
           </Route>
           <Route path="*" element={<NotFound />} />
