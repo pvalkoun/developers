@@ -69,7 +69,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { entry, siteUrl = "https://aadfdsfjjldjf-dev-nectar-pulse.lovable.app" } = await req.json() as { 
+    const { entry, siteUrl = "https://www.mountainaiproject.com" } = await req.json() as { 
       entry: ChangelogEntry; 
       siteUrl?: string;
     };
