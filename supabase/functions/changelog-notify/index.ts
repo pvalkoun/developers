@@ -75,6 +75,8 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
+    // TEMP: bypass auth for triggering test
+    // Remove this block after test
 
     const { entry, siteUrl = "https://www.mountainaiproject.com" } = await req.json() as { 
       entry: ChangelogEntry; 
