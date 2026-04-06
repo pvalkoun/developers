@@ -99,16 +99,16 @@ export function DocSidebar() {
                   <SidebarMenu>
                     <SidebarMenuItem>
                       <SidebarMenuButton asChild>
-                        <NavLink to="/integrations/twilio" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
-                          <Plug className="h-4 w-4 mr-2" />
+                        <NavLink to="/integrations/twilio" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium" className="pl-8 text-xs">
+                          <Plug className="h-3.5 w-3.5 mr-2" />
                           {!collapsed && <span>Twilio</span>}
                         </NavLink>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                     <SidebarMenuItem>
                       <SidebarMenuButton asChild>
-                        <NavLink to="/integrations/genesys" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
-                          <Plug className="h-4 w-4 mr-2" />
+                        <NavLink to="/integrations/genesys" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium" className="pl-8 text-xs">
+                          <Plug className="h-3.5 w-3.5 mr-2" />
                           {!collapsed && <span>Genesys Cloud CX</span>}
                         </NavLink>
                       </SidebarMenuButton>
