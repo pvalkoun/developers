@@ -15,6 +15,9 @@ import ChangelogSubscribe from "./pages/ChangelogSubscribe";
 import PreCallAuth from "./pages/PreCallAuth";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import VerifySubscription from "./pages/VerifySubscription";
+import WebhookOverview from "./pages/WebhookOverview";
+import WebhookSetupGuide from "./pages/WebhookSetupGuide";
+import WebhookEndpointPage from "./pages/WebhookEndpointPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
