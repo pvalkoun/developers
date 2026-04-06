@@ -428,10 +428,7 @@ client.calls.create(
       },
       {
         title: "Step 1 — Create a New PHLO",
-        content: "1. Log in to the **Plivo Console**\n2. Navigate to **PHLO** → **Create New**\n3. Add a **Start** node and enable **API Request** or **Incoming Call** as the trigger\n4. The PHLO builder canvas will open with your Start node ready for configuration",
-        images: [
-          { src: plivoPhloBuilder, alt: "Plivo Console — PHLO Builder with Start node", caption: "The Plivo PHLO Builder canvas with the Start node configured" }
-        ]
+        content: "1. Log in to the **Plivo Console**\n2. Navigate to **PHLO** → **Create New**\n3. Add a **Start** node and enable **API Request** or **Incoming Call** as the trigger\n4. The PHLO builder canvas will open with your Start node ready for configuration"
       },
       {
         title: "Step 2 — Configure CCID HTTP Request",
