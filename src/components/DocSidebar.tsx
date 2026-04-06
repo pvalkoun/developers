@@ -59,14 +59,6 @@ export function DocSidebar() {
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <NavLink to="/changelog" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
-                      <ClipboardList className="h-4 w-4 mr-2" />
-                      {!collapsed && <span>Changelog</span>}
-                    </NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
