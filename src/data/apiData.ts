@@ -1248,8 +1248,8 @@ export const apiEndpoints: ApiEndpoint[] = [
   }
 ];
 
-export const getEndpointsForProduct = (product: "scp" | "bcd") => {
-  return apiEndpoints.filter(ep => ep.product?.includes(product) || ep.product?.includes("common"));
+export const getEndpointsForProduct = (product: "scp" | "bcd" | "cno") => {
+  return apiEndpoints.filter(ep => ep.product?.includes(product as "scp" | "bcd") || ep.product?.includes("common"));
 };
 
 export const getEndpointById = (id: string) => {
