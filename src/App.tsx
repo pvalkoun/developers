@@ -29,6 +29,7 @@ const App = () => (
             <Route path="/products/:productId/guide" element={<SetupGuide />} />
             <Route path="/products/:productId/api/:endpointId" element={<ApiEndpointPage />} />
             <Route path="/integrations/:integrationId" element={<IntegrationPage />} />
+            <Route path="/changelog" element={<Changelog />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
