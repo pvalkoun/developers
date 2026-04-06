@@ -14,7 +14,7 @@ import {
   SidebarHeader,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Home, Shield, Palette, BookOpen, Code2, Plug, ChevronLeft, ChevronDown, ChevronRight, Download, ClipboardList, Phone } from "lucide-react";
+import { Home, Shield, Palette, BookOpen, Code2, Plug, ChevronLeft, ChevronDown, ChevronRight, Download, ClipboardList, Phone, Tag } from "lucide-react";
 import { products } from "@/data/productData";
 import { getEndpointsForProduct, getCategories } from "@/data/apiData";
 import { getIntegrationsForProduct } from "@/data/integrationData";
