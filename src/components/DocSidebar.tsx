@@ -124,39 +124,29 @@ export function DocSidebar() {
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
-          <Collapsible>
-            <SidebarGroup>
-              <CollapsibleTrigger className="flex w-full items-center justify-between px-3 py-1.5 text-xs font-semibold text-sidebar-foreground/70 hover:text-sidebar-foreground cursor-pointer">
-                <span className="flex items-center gap-2">
-                  <Plug className="h-4 w-4" />
-                  {!collapsed && <span>Integrations</span>}
-                </span>
-                {!collapsed && <ChevronRight className="h-3 w-3 transition-transform [[data-state=open]>&]:rotate-90" />}
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <SidebarGroupContent>
-                  <SidebarMenu>
-                    <SidebarMenuItem>
-                      <SidebarMenuButton asChild>
-                        <NavLink to="/integrations/twilio" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium" className="pl-8 text-xs">
-                          <Plug className="h-3.5 w-3.5 mr-2" />
-                          {!collapsed && <span>Twilio</span>}
-                        </NavLink>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                    <SidebarMenuItem>
-                      <SidebarMenuButton asChild>
-                        <NavLink to="/integrations/genesys" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium" className="pl-8 text-xs">
-                          <Plug className="h-3.5 w-3.5 mr-2" />
-                          {!collapsed && <span>Genesys Cloud CX</span>}
-                        </NavLink>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  </SidebarMenu>
-                </SidebarGroupContent>
-              </CollapsibleContent>
-            </SidebarGroup>
-          </Collapsible>
+          <SidebarGroup>
+            <SidebarGroupLabel>Integrations</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink to="/integrations/twilio" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
+                      <Plug className="h-4 w-4 mr-2" />
+                      {!collapsed && <span>Twilio</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <NavLink to="/integrations/genesys" activeClassName="bg-sidebar-accent text-sidebar-primary font-medium">
+                      <Plug className="h-4 w-4 mr-2" />
+                      {!collapsed && <span>Genesys Cloud CX</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
         </SidebarContent>
       </Sidebar>
     );
