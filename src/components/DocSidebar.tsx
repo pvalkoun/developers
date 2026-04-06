@@ -218,7 +218,7 @@ export function DocSidebar() {
               All Products
             </Button>
             <div className="flex items-center gap-2">
-              {productId === "scp" ? <Shield className="h-5 w-5 text-sidebar-primary" /> : <Palette className="h-5 w-5 text-sidebar-primary" />}
+              {productId === "scp" ? <Shield className="h-5 w-5 text-sidebar-primary" /> : productId === "cno" ? <Tag className="h-5 w-5 text-sidebar-primary" /> : <Palette className="h-5 w-5 text-sidebar-primary" />}
               <span className="font-bold text-sidebar-foreground">{product!.name}</span>
             </div>
           </div>
