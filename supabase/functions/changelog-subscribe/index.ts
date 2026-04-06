@@ -137,7 +137,7 @@ Deno.serve(async (req) => {
       </div>
       <h2 style="font-size:20px;color:#1e293b;margin:8px 0 12px;">Verify your email</h2>
       <p style="font-size:14px;color:#475569;line-height:1.6;margin:0 0 20px;">
-        Hi ${name.trim()}, thanks for subscribing to TruContact Solutions changelog updates.
+        Hi ${first_name.trim()}, thanks for subscribing to TruContact Solutions changelog updates.
         Please verify your email to start receiving notifications about new API changes, features, and updates.
       </p>
       <a href="${verifyUrl}" style="display:inline-block;background:#0066cc;color:#ffffff;padding:12px 24px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:600;">
