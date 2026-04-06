@@ -127,10 +127,13 @@ Deno.serve(async (req) => {
 
     // Enqueue verification email
     const messageId = crypto.randomUUID();
+    const idempotencyKey = `changelog-verify-${emailLower}-${verificationToken}`;
     const { error: enqueueError } = await supabase.rpc("enqueue_email", {
       queue_name: "transactional_emails",
       payload: {
         message_id: messageId,
+        idempotency_key: idempotencyKey,
+        purpose: "transactional",
         to: emailLower,
         subject: "Verify your TruContact Solutions changelog subscription",
         html: emailHtml,
@@ -146,8 +149,7 @@ Deno.serve(async (req) => {
     // Log to email_send_log
     await supabase.from("email_send_log").insert({
       message_id: messageId,
-      recipient: emailLower,
-      subject: "Verify your TruContact Solutions changelog subscription",
+      recipient_email: emailLower,
       template_name: "changelog-verification",
       status: "pending",
     });
