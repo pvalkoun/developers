@@ -15,8 +15,8 @@ const changelog: ChangelogEntry[] = [
     date: "2026-04-06",
     title: "Analytics API Documentation",
     description:
-      "Added Analytics API reference under a new Resources section. The Analytics API provides per-TN and account-wide call performance metrics for BCD and SCP services, including answer rates, call durations, signing volumes, and per-carrier breakdowns. Supports cursor-based pagination and gzip compression.",
-    tags: ["Analytics", "New Feature", "API"],
+      "Added Analytics API reference under a new Resources section with full authentication flow, corrected endpoint paths (/ccid/analytics/v1/admin/account/{accountId}/tn and /tns), per-TN and account-wide call performance metrics for BCD and SCP services, cursor-based pagination, and detailed response schema references.",
+    tags: ["Analytics", "Updated", "API"],
     links: [
       { label: "Analytics API", to: "/resources/analytics" },
     ],
