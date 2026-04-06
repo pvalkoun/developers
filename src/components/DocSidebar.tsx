@@ -497,3 +497,76 @@ function ApiCategoryAccordion({
     </SidebarGroup>
   );
 }
+
+function WebhookApiAccordion({
+  collapsed,
+  currentPath,
+}: {
+  collapsed: boolean;
+  currentPath: string;
+}) {
+  const activeCategory = webhookCategories.find(cat =>
+    webhookEndpoints.filter(ep => ep.category === cat).some(ep => currentPath.includes(ep.id))
+  );
+  const [openCategory, setOpenCategory] = useState<string | null>(activeCategory || null);
+
+  const handleToggle = (cat: string) => {
+    setOpenCategory(prev => (prev === cat ? null : cat));
+  };
+
+  return (
+    <SidebarGroup>
+      <SidebarGroupLabel>API Reference</SidebarGroupLabel>
+      <SidebarGroupContent>
+        <SidebarMenu>
+          {webhookCategories.map(cat => {
+            const catEndpoints = webhookEndpoints.filter(ep => ep.category === cat);
+            const isOpen = openCategory === cat;
+
+            if (collapsed) {
+              return catEndpoints.map(ep => (
+                <SidebarMenuItem key={ep.id}>
+                  <SidebarMenuButton asChild>
+                    <NavLink
+                      to={`/resources/webhooks/api/${ep.id}`}
+                      activeClassName="bg-sidebar-accent text-sidebar-primary font-medium"
+                      className="flex items-center gap-2 pl-6"
+                    >
+                      <Code2 className="h-4 w-4" />
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ));
+            }
+
+            return (
+              <div key={cat}>
+                <button
+                  onClick={() => handleToggle(cat)}
+                  className="flex w-full items-center justify-between px-3 py-1.5 text-[10px] uppercase tracking-wider text-sidebar-foreground/50 font-semibold mt-2 hover:text-sidebar-foreground/80 cursor-pointer"
+                >
+                  <span>{cat}</span>
+                  {isOpen ? <ChevronDown className="h-3 w-3" /> : <ChevronRight className="h-3 w-3" />}
+                </button>
+                {isOpen && catEndpoints.map(ep => (
+                  <SidebarMenuItem key={ep.id}>
+                    <SidebarMenuButton asChild>
+                      <NavLink
+                        to={`/resources/webhooks/api/${ep.id}`}
+                        activeClassName="bg-sidebar-accent text-sidebar-primary font-medium"
+                        className="flex items-center gap-2 pl-6"
+                      >
+                        <MethodBadge method={ep.method} />
+                        <span className="text-xs truncate">{ep.name}</span>
+                      </NavLink>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </div>
+            );
+          })}
+        </SidebarMenu>
+      </SidebarGroupContent>
+    </SidebarGroup>
+  );
+}
