@@ -91,7 +91,13 @@ Deno.serve(async (req) => {
       const newToken = crypto.randomUUID();
       await supabase
         .from("changelog_subscribers")
-        .update({ name: name.trim(), verification_token: newToken, updated_at: new Date().toISOString() })
+        .update({
+          first_name: first_name.trim(),
+          last_name: last_name.trim(),
+          company_name: company_name.trim(),
+          verification_token: newToken,
+          updated_at: new Date().toISOString(),
+        })
         .eq("id", existing.id);
       verificationToken = newToken;
     } else {
@@ -99,7 +105,13 @@ Deno.serve(async (req) => {
       const newToken = crypto.randomUUID();
       const { error: insertError } = await supabase
         .from("changelog_subscribers")
-        .insert({ name: name.trim(), email: emailLower, verification_token: newToken });
+        .insert({
+          first_name: first_name.trim(),
+          last_name: last_name.trim(),
+          email: emailLower,
+          company_name: company_name.trim(),
+          verification_token: newToken,
+        });
 
       if (insertError) {
         console.error("Insert error:", insertError);
