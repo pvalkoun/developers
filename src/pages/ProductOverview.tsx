@@ -30,7 +30,7 @@ export default function ProductOverview() {
       </ul>
 
       <h2>Getting Started</h2>
-      <div className="grid gap-4 md:grid-cols-3 not-prose">
+      <div className={`grid gap-4 not-prose ${integrations.length > 0 ? "md:grid-cols-3" : "md:grid-cols-2"}`}>
         <Card className="hover:shadow-md transition-shadow flex flex-col">
           <CardContent className="p-5 flex flex-col flex-1">
             <BookOpen className="h-8 w-8 text-primary mb-3" />
@@ -55,20 +55,22 @@ export default function ProductOverview() {
             </Button>
           </CardContent>
         </Card>
-        <Card className="hover:shadow-md transition-shadow flex flex-col">
-          <CardContent className="p-5 flex flex-col flex-1">
-            <Plug className="h-8 w-8 text-primary mb-3" />
-            <h3 className="font-semibold mb-1">Integrations</h3>
-            <p className="text-sm text-muted-foreground mb-3">
-              {integrations.length > 0 ? `${integrations.map(i => i.platform).join(", ")} guides` : "Platform integration guides"}
-            </p>
-            <Button asChild size="sm" variant="outline" className="mt-auto">
-              <Link to={`/integrations/${integrations[0]?.id || "twilio"}`}>
-                View Integrations <ArrowRight className="ml-1 h-3 w-3" />
-              </Link>
-            </Button>
-          </CardContent>
-        </Card>
+        {integrations.length > 0 && (
+          <Card className="hover:shadow-md transition-shadow flex flex-col">
+            <CardContent className="p-5 flex flex-col flex-1">
+              <Plug className="h-8 w-8 text-primary mb-3" />
+              <h3 className="font-semibold mb-1">Integrations</h3>
+              <p className="text-sm text-muted-foreground mb-3">
+                {integrations.map(i => i.platform).join(", ")} guides
+              </p>
+              <Button asChild size="sm" variant="outline" className="mt-auto">
+                <Link to={`/integrations/${integrations[0]?.id || "twilio"}`}>
+                  View Integrations <ArrowRight className="ml-1 h-3 w-3" />
+                </Link>
+              </Button>
+            </CardContent>
+          </Card>
+        )}
       </div>
 
       <h2>Configuration Flow</h2>
