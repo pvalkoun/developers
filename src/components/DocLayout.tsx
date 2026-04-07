@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import BackToTop from "@/components/BackToTop";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { DocSidebar } from "@/components/DocSidebar";
 import { Separator } from "@/components/ui/separator";
