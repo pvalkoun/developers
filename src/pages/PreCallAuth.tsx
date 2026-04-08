@@ -8,7 +8,7 @@ const PreCallAuth = () => {
     <div className="docs-prose">
       <div className="flex items-center gap-3 mb-2">
         <MethodBadge method="POST" />
-        <h1 className="!mb-0 !mt-0">Pre-Call Authentication (CCID)</h1>
+        <h1 className="!mb-0 !mt-0">Call Authentication (CCID)</h1>
       </div>
 
       <div className="mb-6 p-3 rounded-lg bg-muted font-mono text-sm">

@@ -22,7 +22,7 @@ const Index = () => {
               <div className="p-2.5 rounded-lg bg-primary/10">
                 <Phone className="h-6 w-6 text-primary" />
               </div>
-              <CardTitle className="text-xl">Pre-Call Authentication</CardTitle>
+              <CardTitle className="text-xl">Call Authentication</CardTitle>
             </div>
             <CardDescription className="text-sm leading-relaxed">
               Verify Caller Identity in real-time before Branding calls or to stop spoofed calls. This is prerequisite for both Branded Call Display and Spoofed Call Protection.
@@ -119,7 +119,7 @@ const Index = () => {
 
       <h2 className="text-2xl font-semibold mb-4">Quick Links</h2>
       <div className="grid gap-3 md:grid-cols-3">
-        <QuickLink to="/pre-call-auth" title="Pre-Call Authentication" description="Required prerequisite for SCP and BCD to function" />
+        <QuickLink to="/pre-call-auth" title="Call Authentication" description="Required prerequisite for SCP and BCD to function" />
         <QuickLink to="/products/scp/guide" title="SCP Setup Guide" description="Configure spoofed call protection end-to-end" />
         <QuickLink to="/products/bcd/guide" title="BCD Setup Guide" description="Set up branded call display for your numbers" />
       </div>

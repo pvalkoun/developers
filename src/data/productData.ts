@@ -21,10 +21,10 @@ export interface SetupStep {
 export const products: Product[] = [
   {
     id: "pca",
-    name: "Pre-Call Authentication",
-    fullName: "TruContact Pre-Call Authentication (CCID)",
+    name: "Call Authentication",
+    fullName: "TruContact Call Authentication (CCID)",
     tagline: "Verify caller identity in real-time using STIR/SHAKEN before every call",
-    description: "Pre-Call Authentication (PCA) is a standards-based REST API for verifying caller identity using IETF RFC 8224 and the ATIS SHAKEN framework. It is a prerequisite for both Spoofed Call Protection and Branded Call Display — every outbound call must be authenticated through the CCID service before any TruContact features can take effect.",
+    description: "Call Authentication (PCA) is a standards-based REST API for verifying caller identity using IETF RFC 8224 and the ATIS SHAKEN framework. It is a prerequisite for both Spoofed Call Protection and Branded Call Display — every outbound call must be authenticated through the CCID service before any TruContact features can take effect.",
     benefits: [
       "Required prerequisite for SCP and BCD to function",
       "Real-time caller identity verification using STIR/SHAKEN",
