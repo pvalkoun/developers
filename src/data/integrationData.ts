@@ -75,7 +75,7 @@ export const integrations: Integration[] = [
       },
       {
         title: "Supported Products",
-        content: "| Product | Description |\n|---------|-------------|\n| Branded Call Display (BCD) | Display your verified business name, logo, and call reason on the recipient's phone |\n| Spoofed Call Protection (SCP) | Protect your telephone numbers from being spoofed by bad actors |\n| Pre-Call Authentication | STIR/SHAKEN token signing for call attestation |"
+        content: "| Product | Description |\n|---------|-------------|\n| Branded Call Display (BCD) | Display your verified business name, logo, and call reason on the recipient's phone |\n| Spoofed Call Protection (SCP) | Protect your telephone numbers from being spoofed by bad actors |\n| Call Authentication | STIR/SHAKEN token signing for call attestation |"
       },
       {
         title: "Testing & Verification",
